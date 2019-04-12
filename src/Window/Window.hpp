@@ -16,6 +16,12 @@ struct SDLWindowDeleter {
     }
 };
 
+struct SDLRendererDeleter {
+    inline void operator()(SDL_Renderer* renderer) {
+        SDL_DestroyRenderer(renderer);
+    }
+};
+
 class   Window {
 
 public:
@@ -24,8 +30,8 @@ public:
 
 private:
 
-    //SDL_Window *_window;
-    std::unique_ptr<SDL_Window, SDLWindowDeleter> _window;
+    std::unique_ptr<SDL_Window, SDLWindowDeleter>       _window;
+    std::unique_ptr<SDL_Renderer, SDLRendererDeleter>   _renderer;
 
 private:
 
