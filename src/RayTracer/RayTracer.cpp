@@ -17,9 +17,17 @@ RayTracer::~RayTracer()
 
 void    RayTracer::run()
 {
+    for (uint32_t x = 0; x < WINDOW_W; ++x) {
+        for (uint32_t y = 0; y < WINDOW_H; ++y) {
+            this->_window.drawPixel(0xFFFFFFFF, x, y);
+        }
+    }
+    this->_window.render();
+
     while (!(_eventHandler.mayClose())) {
         _eventHandler.wait();
-
         _eventHandler.manageWindowEvent();
+
+
     }
 }

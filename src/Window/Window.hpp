@@ -28,6 +28,9 @@ public:
     Window(int w, int h);
     ~Window();
 
+    void    drawPixel(uint32_t color, uint32_t x, uint32_t y) const;
+    void    render() const;
+
 private:
 
     std::unique_ptr<SDL_Window, SDLWindowDeleter>       _window;
