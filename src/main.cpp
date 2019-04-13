@@ -3,7 +3,6 @@
 
 #include <iostream>
 
-#include "pch.h"
 #include "RayTracer/RayTracer.hpp"
 
 int main() {

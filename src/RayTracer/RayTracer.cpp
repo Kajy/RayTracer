@@ -17,8 +17,11 @@ RayTracer::~RayTracer()
 
 void    RayTracer::run()
 {
-    for (uint32_t x = 0; x < WINDOW_W; ++x) {
-        for (uint32_t y = 0; y < WINDOW_H; ++y) {
+    uint32_t width = _window.getDrawableSurfaceWidth();
+    uint32_t height = _window.getDrawableSurfaceHeight();
+
+    for (uint32_t x = 0; x < width; ++x) {
+        for (uint32_t y = 0; y < height; ++y) {
             this->_window.drawPixel(WHITE_COLOR, x, y);
         }
     }

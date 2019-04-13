@@ -38,8 +38,13 @@ private:
 
 private:
 
-    uint32_t    _width;
-    uint32_t    _height;
+    uint32_t    _windowWidth;
+    uint32_t    _windowHeight;
+    int         _drawableSurfaceWidth;
+    int         _drawableSurfaceHeight;
+public:
+    int getDrawableSurfaceWidth() const;
+    int getDrawableSurfaceHeight() const;
 
 };
 
