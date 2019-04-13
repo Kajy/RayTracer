@@ -23,7 +23,7 @@ function(setupWindows)
 	include_directories(${SDL2_INCLUDE_DIR})
 	include_directories(${PROJECT_SOURCE_DIR}/src)
 
-	add_executable(RT src/main.cpp src/RayTracer/RayTracer.hpp src/RayTracer/RayTracer.cpp src/Window/Window.hpp src/Window/Window.cpp src/Config/config.hpp src/EventHandler/EventHandler.hpp src/EventHandler/EventHandler.cpp src/Debug/Debug.hpp)
+	add_executable(RT src/main.cpp src/RayTracer/RayTracer.hpp src/RayTracer/RayTracer.cpp src/Window/Window.hpp src/Window/Window.cpp src/Config/config.hpp src/EventHandler/EventHandler.hpp src/EventHandler/EventHandler.cpp src/Debug/Debug.hpp src/Camera/Camera.cpp src/Scene/Scene.cpp src/SphereObject/SphereObject.cpp)
 
 	target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARY})
 	target_link_libraries(${PROJECT_NAME} ${SDL2MAIN_LIBRARY})

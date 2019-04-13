@@ -5,8 +5,11 @@
 #ifndef RT_CONFIG_HPP
 #define RT_CONFIG_HPP
 
+#define DEBUG true
 #define WINDOW_W 1280
 #define WINDOW_H 720
+
+#define	FOV	200
 
 #define	BLACK_COLOR	0x00000000
 #define WHITE_COLOR	0xFFFFFFFF

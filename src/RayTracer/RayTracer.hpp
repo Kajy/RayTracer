@@ -11,6 +11,7 @@
 #include "Config/config.hpp"
 #include "Window/Window.hpp"
 #include "EventHandler/EventHandler.hpp"
+#include "Scene/Scene.hpp"
 
 class   RayTracer {
 
@@ -21,8 +22,9 @@ public:
     void    run();
 
 private:
-    Window         _window;
-    EventHandler   _eventHandler;
+    Window			_window;
+    EventHandler	_eventHandler;
+	Scene			_scene;
 
 
 };

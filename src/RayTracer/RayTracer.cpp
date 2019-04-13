@@ -22,7 +22,11 @@ void    RayTracer::run()
 
     for (uint32_t x = 0; x < width; ++x) {
         for (uint32_t y = 0; y < height; ++y) {
-            this->_window.drawPixel(WHITE_COLOR, x, y);
+			if (this->_scene.renderScene(x, y)) {
+				this->_window.drawPixel(WHITE_COLOR, x, y);
+			}
+			else
+				this->_window.drawPixel(BLACK_COLOR, x, y);
         }
     }
     this->_window.render();
