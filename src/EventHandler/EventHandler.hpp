@@ -5,7 +5,7 @@
 #ifndef RT_EVENTHANDLER_HPP
 #define RT_EVENTHANDLER_HPP
 
-#include <SDL_events.h>
+#include <SDL2/SDL_events.h>
 
 class   EventHandler {
 
