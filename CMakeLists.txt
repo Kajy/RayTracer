@@ -23,7 +23,18 @@ function(setupWindows)
 	include_directories(${SDL2_INCLUDE_DIR})
 	include_directories(${PROJECT_SOURCE_DIR}/src)
 
-	add_executable(RT src/main.cpp src/RayTracer/RayTracer.hpp src/RayTracer/RayTracer.cpp src/Window/Window.hpp src/Window/Window.cpp src/Config/config.hpp src/EventHandler/EventHandler.hpp src/EventHandler/EventHandler.cpp src/Debug/Debug.hpp src/Camera/Camera.cpp src/Scene/Scene.cpp src/SphereObject/SphereObject.cpp)
+	add_executable(RT
+			src/main.cpp
+			src/RayTracer/RayTracer.hpp
+			src/RayTracer/RayTracer.cpp
+			src/Window/Window.hpp src/Window/Window.cpp
+			src/Config/config.hpp
+			src/EventHandler/EventHandler.hpp
+			src/EventHandler/EventHandler.cpp
+			src/Debug/Debug.hpp
+			src/Camera/Camera.cpp
+			src/Scene/Scene.cpp
+			src/SphereObject/SphereObject.cpp)
 
 	target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARY})
 	target_link_libraries(${PROJECT_NAME} ${SDL2MAIN_LIBRARY})
@@ -33,11 +44,27 @@ function(setupLinux)
 	find_package(SDL2 REQUIRED)
 	include_directories(${SDL2_INCLUDE_DIRS})
 	include_directories(${PROJECT_SOURCE_DIR}/src)
-
-	add_executable(RT src/main.cpp src/RayTracer/RayTracer.hpp src/RayTracer/RayTracer.cpp src/Window/Window.hpp src/Window/Window.cpp src/Config/config.hpp src/EventHandler/EventHandler.hpp src/EventHandler/EventHandler.cpp src/Debug/Debug.hpp)
+	find_package(glm REQUIRED)
+	add_executable(RT
+			src/main.cpp
+			src/RayTracer/RayTracer.hpp
+			src/RayTracer/RayTracer.cpp
+			src/Window/Window.hpp
+			src/Window/Window.cpp
+			src/Config/config.hpp
+			src/EventHandler/EventHandler.hpp
+			src/EventHandler/EventHandler.cpp
+			src/Debug/Debug.hpp
+			src/Scene/Scene.cpp
+			src/Scene/Scene.hpp
+			src/SphereObject/SphereObject.cpp
+			src/SphereObject/SphereObject.hpp
+			src/Camera/Camera.cpp
+			src/Camera/Camera.hpp
+			)
 
 	string(STRIP ${SDL2_LIBRARIES} SDL2_LIBRARIES)
-	target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES})
+	target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES} glm)
 endfunction()
 
 if (WIN32)

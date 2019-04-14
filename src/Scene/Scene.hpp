@@ -5,7 +5,13 @@
 #ifndef RT_SCENE_HPP
 #define RT_SCENE_HPP
 
-#include "gtx/norm.hpp"
+#ifdef _WIN32
+    #include "gtx/norm.hpp"
+#elif __APPLE__
+    #include <glm/glm.hpp>
+    #include <glm/detail/type_vec.hpp>
+    #include <glm/vec3.hpp>
+#endif
 
 #include "Config/config.hpp"
 #include "Camera/Camera.hpp"

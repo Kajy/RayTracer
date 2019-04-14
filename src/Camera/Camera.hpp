@@ -5,7 +5,12 @@
 #ifndef RT_CAMERA_HPP
 #define RT_CAMERA_HPP
 
-#include "vec3.hpp"
+#ifdef _WIN32
+    #include "vec3.hpp"
+#elif __APPLE__
+    #include <glm/detail/type_vec.hpp>
+    #include <glm/vec3.hpp>
+#endif
 
 class Camera
 {

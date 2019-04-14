@@ -9,7 +9,13 @@
 #include "Config/config.hpp"
 #include "Camera/Camera.hpp"
 #include "Debug/Debug.hpp"
-#include "gtx/norm.hpp"
+
+#ifdef _WIN32
+    #include "gtx/norm.hpp"
+#elif __APPLE__
+    #include <glm/detail/type_vec.hpp>
+    #include <glm/vec3.hpp>
+#endif
 
 class SphereObject
 {
