@@ -14,8 +14,8 @@
 #endif
 
 #include "Config/config.hpp"
-#include "Camera/Camera.hpp"
-#include "SphereObject/SphereObject.hpp"
+#include "Objects/Camera/Camera.hpp"
+#include "Objects/Sphere/Sphere.hpp"
 
 class Scene
 {
@@ -28,7 +28,7 @@ public:
 private:
 	Camera	_view;
 
-	SphereObject	_sphereTest; //To remove just a test
+	Sphere	_sphereTest; //To remove just a test
 
 };
 

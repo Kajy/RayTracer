@@ -5,6 +5,7 @@
 #ifndef RT_CAMERA_HPP
 #define RT_CAMERA_HPP
 
+#include "../AObject.hpp"
 #ifdef _WIN32
     #include "vec3.hpp"
 #elif __APPLE__
@@ -12,17 +13,13 @@
     #include <glm/vec3.hpp>
 #endif
 
-class Camera
-{
+class Camera : public AObject {
 public:
-	Camera();
+	Camera() : Camera(0, 0, 0) {};
 	Camera(double x, double y, double z);
+	Camera(const glm::vec3 &position) : AObject(position) {};
 	~Camera();
 
-	glm::dvec3 const &getPosition() const;
-
-private:
-	glm::dvec3	_pos;
 };
 
 #endif //RT_CAMERA_HPP
