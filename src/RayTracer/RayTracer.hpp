@@ -30,8 +30,6 @@ private:
     Window			_window;
     EventHandler	_eventHandler;
 	Scene			_scene;
-
-
 };
 
 #endif //RT_RAYTRACER_HPP
