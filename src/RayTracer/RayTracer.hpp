@@ -7,6 +7,11 @@
 
 #include <iostream>
 #include <memory>
+#include <vector>
+#include <array>
+#include <algorithm>
+#include <numeric>
+#include <future>
 
 #include "Config/config.hpp"
 #include "Window/Window.hpp"

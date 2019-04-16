@@ -58,7 +58,7 @@ function(setupLinux)
 			)
 
 	string(STRIP ${SDL2_LIBRARIES} SDL2_LIBRARIES)
-	target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES})
+	target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES} pthread)
 endfunction()
 
 if (WIN32)
