@@ -6,11 +6,11 @@
 #define RT_COLOR_HPP
 
 typedef struct Color {
-   char      red;
-   char      green;
-   char      blue;
-   char      alpha;
-   Color(char r, char g, char b, char a) : red(r), blue(b), green(g), alpha(a) {}
+   unsigned char      red;
+   unsigned char      green;
+   unsigned char      blue;
+   unsigned char      alpha;
+   Color(unsigned char r, unsigned char g, unsigned char b, unsigned char a) : red(r), blue(b), green(g), alpha(a) {}
    Color(const Color &copy) : red(copy.red), blue(copy.blue), green(copy.green), alpha(copy.alpha) {}
    Color &operator=(const Color &copy) {
        red = copy.red;
