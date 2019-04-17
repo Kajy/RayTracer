@@ -32,9 +32,9 @@ function(setupWindows)
 			src/EventHandler/EventHandler.hpp
 			src/EventHandler/EventHandler.cpp
 			src/Debug/Debug.hpp
-			src/Camera/Camera.cpp
+			src/Objects/Camera/Camera.cpp
 			src/Scene/Scene.cpp
-			src/SphereObject/SphereObject.cpp)
+			src/Objects/Sphere/Sphere.cpp)
 
 	target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARY})
 	target_link_libraries(${PROJECT_NAME} ${SDL2MAIN_LIBRARY})
@@ -53,8 +53,10 @@ function(setupLinux)
 			src/EventHandler/EventHandler.hpp
 			src/EventHandler/EventHandler.cpp
 			src/Scene/Scene.cpp
-			src/SphereObject/SphereObject.cpp
-			src/Camera/Camera.cpp
+			src/Scene/Scene.hpp
+			src/Objects/Sphere/Sphere.cpp
+			src/Objects/Sphere/Sphere.hpp
+			src/Objects/Camera/Camera.cpp
 			)
 
 	string(STRIP ${SDL2_LIBRARIES} SDL2_LIBRARIES)
