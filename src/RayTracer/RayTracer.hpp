@@ -7,6 +7,11 @@
 
 #include <iostream>
 #include <memory>
+#include <vector>
+#include <array>
+#include <algorithm>
+#include <numeric>
+#include <future>
 
 #include "Config/config.hpp"
 #include "Window/Window.hpp"
@@ -25,8 +30,6 @@ private:
     Window			_window;
     EventHandler	_eventHandler;
 	Scene			_scene;
-
-
 };
 
 #endif //RT_RAYTRACER_HPP

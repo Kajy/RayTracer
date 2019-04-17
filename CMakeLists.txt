@@ -42,19 +42,16 @@ endfunction()
 
 function(setupLinux)
 	find_package(SDL2 REQUIRED)
+	find_package(GLM REQUIRED)
+	include_directories(${GLM_INCLUDE_DIRS})
 	include_directories(${SDL2_INCLUDE_DIRS})
 	include_directories(${PROJECT_SOURCE_DIR}/src)
-	find_package(glm REQUIRED)
 	add_executable(RT
 			src/main.cpp
-			src/RayTracer/RayTracer.hpp
 			src/RayTracer/RayTracer.cpp
-			src/Window/Window.hpp
 			src/Window/Window.cpp
-			src/Config/config.hpp
 			src/EventHandler/EventHandler.hpp
 			src/EventHandler/EventHandler.cpp
-			src/Debug/Debug.hpp
 			src/Scene/Scene.cpp
 			src/Scene/Scene.hpp
 			src/Objects/Sphere/Sphere.cpp
@@ -63,7 +60,7 @@ function(setupLinux)
 			)
 
 	string(STRIP ${SDL2_LIBRARIES} SDL2_LIBRARIES)
-	target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES} glm)
+	target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES} pthread)
 endfunction()
 
 if (WIN32)

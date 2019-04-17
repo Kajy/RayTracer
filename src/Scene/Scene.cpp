@@ -18,7 +18,7 @@ Scene::~Scene()
 
 bool		Scene::renderScene(double x, double y) {
 
-	glm::dvec3	_posView = _view.getPosition();
+    glm::dvec3	_posView = _view.getPosition();
 
 	glm::dvec3	_vecDir(FOV - _posView.x, (WINDOW_W / 2) - x - _posView.y, (WINDOW_H / 2) - y - _posView.z);
 	_vecDir = glm::normalize(_vecDir);

@@ -5,7 +5,7 @@
 #ifndef RT_CONFIG_HPP
 #define RT_CONFIG_HPP
 
-#define DEBUG true
+#define DEBUG false
 #define WINDOW_W 1280
 #define WINDOW_H 720
 

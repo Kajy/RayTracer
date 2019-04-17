@@ -25,6 +25,8 @@ Window::Window(int w, int h):
 
     SDL_GL_GetDrawableSize(_window.get(), &_drawableSurfaceWidth, &_drawableSurfaceHeight);
 
+    _image = new uint32_t[_drawableSurfaceHeight * _drawableSurfaceWidth];
+
     if ((_renderer = std::unique_ptr<SDL_Renderer, SDLRendererDeleter>(SDL_CreateRenderer(_window.get(), -1, SDL_RENDERER_ACCELERATED))) == nullptr) {
         Debug::printError("Error when creating renderer");
     }
@@ -32,18 +34,27 @@ Window::Window(int w, int h):
 
 Window::~Window() {
     SDL_DestroyWindow(_window.get());
+    delete _image;
     Debug::printInfo("SDL Window destroyed.");
 }
 
 
 void        Window::drawPixel(uint32_t color, uint32_t x, uint32_t y) const
 {
-    SDL_SetRenderDrawColor(_renderer.get(), ((color & 0xff000000) >> 24), ((color & 0x00ff0000) >> 16), ((color & 0x0000ff00) >> 8), 255);
-    SDL_RenderDrawPoint(_renderer.get(), x, y);
+    _image[y * _drawableSurfaceWidth + x] = color;
+   // SDL_SetRenderDrawColor(_renderer.get(), ((color & 0xff000000) >> 24), ((color & 0x00ff0000) >> 16), ((color & 0x0000ff00) >> 8), 255);
+   // SDL_RenderDrawPoint(_renderer.get(), x, y);
 }
 
 void        Window::render() const
 {
+    for (uint32_t x = 0; x < _drawableSurfaceWidth; ++x) {
+        for (uint32_t y = 0; y < _drawableSurfaceHeight; ++y) {
+            uint32_t color = _image[y * _drawableSurfaceWidth + x];
+            SDL_SetRenderDrawColor(_renderer.get(), ((color & 0xff000000) >> 24), ((color & 0x00ff0000) >> 16), ((color & 0x0000ff00) >> 8), 255);
+            SDL_RenderDrawPoint(_renderer.get(), x, y);
+        }
+    }
     SDL_RenderPresent(_renderer.get());
 }
 
@@ -54,4 +65,8 @@ int         Window::getDrawableSurfaceWidth() const {
 
 int         Window::getDrawableSurfaceHeight() const {
     return _drawableSurfaceHeight;
+}
+
+uint32_t    *Window::getImage() const {
+    return _image;
 }

@@ -42,9 +42,14 @@ private:
     uint32_t    _windowHeight;
     int         _drawableSurfaceWidth;
     int         _drawableSurfaceHeight;
+
+    uint32_t    *_image;
+
 public:
     int getDrawableSurfaceWidth() const;
     int getDrawableSurfaceHeight() const;
+
+    uint32_t *getImage() const;
 
 };
 
