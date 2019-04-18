@@ -36,17 +36,9 @@ void    RayTracer::run()
                 }
             }
         }));
+      future_vector[i].wait();
     }
 
-   /* for (uint32_t x = 0; x < WINDOW_W; ++x) {
-        for (uint32_t y = 0; y < WINDOW_H; ++y) {
-            if (this->_ray.launchRay(x, y, this->_scene)) {
-                this->_window.drawPixel(WHITE_COLOR, x, y);
-            } else {
-                this->_window.drawPixel(BLACK_COLOR, x, y);
-            }
-        }
-    }*/
     auto end = std::chrono::steady_clock::now();
     std::cout << "Elapsed time in microseconds : "
               << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()
