@@ -13,7 +13,7 @@
 #include <Objects/AShapeObject.hpp>
 
 #ifdef _WIN32
-    #include "gtx/norm.hpp"
+    #include "glm/gtx/norm.hpp"
 #elif __APPLE__ or __linux__
     #include <glm/detail/type_vec.hpp>
     #include <glm/vec3.hpp>
