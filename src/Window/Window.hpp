@@ -8,6 +8,9 @@
 #include <memory>
 #include <SDL2/SDL.h>
 
+#include <glm/glm.hpp>
+
+#include "Config/config.hpp"
 #include "Common/Intersection.hpp"
 #include "Debug/Debug.hpp"
 
@@ -29,7 +32,7 @@ public:
     Window(int w, int h);
     ~Window();
 
-    void    drawPixel(Color color, uint32_t x, uint32_t y) const;
+    void    drawPixel(Intersection inter, uint32_t x, uint32_t y) const;
     void    render() const;
     void    generateDistanceMap(double maxDist);
 

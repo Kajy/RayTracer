@@ -9,7 +9,7 @@
 
 Scene::Scene():
 	_view(-15.0, 0, 0),
-	_farestDistanceHited(MAX_DISTANCE)
+	_farestDistanceHited(0)
 {
     _shapeObjects.push_back(new Sphere(0.0, 0.0, 0.0, 10, Color(255, 255, 255, 255)));
   //  _shapeObjects.push_back(new Sphere(0.0, -20.0, 0.0, 5, Color(255, 0, 0, 255)));
@@ -28,7 +28,8 @@ Intersection		    Scene::renderScene(double x, double y) {
 
 	Intersection newInter = ray.launchRay(this->_shapeObjects);
 
-	_farestDistanceHited = glm::min(_farestDistanceHited, newInter.distanceWithViewer);
+	if (newInter.distanceWithViewer < MAX_DISTANCE)
+	    _farestDistanceHited = glm::max(_farestDistanceHited, newInter.distanceWithViewer);
 
 	return newInter;
 }

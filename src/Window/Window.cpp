@@ -40,12 +40,13 @@ Window::~Window() {
 }
 
 
-void        Window::drawPixel(Color color, uint32_t x, uint32_t y) const
+void        Window::drawPixel(Intersection inter, uint32_t x, uint32_t y) const
 {
-    _image[y * _drawableSurfaceWidth + x].color.red = color.red;
-    _image[y * _drawableSurfaceWidth + x].color.green = color.green;
-    _image[y * _drawableSurfaceWidth + x].color.blue = color.blue;
+    _image[y * _drawableSurfaceWidth + x].color.red = inter.color.red;
+    _image[y * _drawableSurfaceWidth + x].color.green = inter.color.green;
+    _image[y * _drawableSurfaceWidth + x].color.blue = inter.color.blue;
     _image[y * _drawableSurfaceWidth + x].color.alpha = 255;
+    _image[y * _drawableSurfaceWidth + x].distanceWithViewer = inter.distanceWithViewer;
 }
 
 void        Window::render() const
@@ -64,7 +65,7 @@ void        Window::generateDistanceMap(double maxDist) {
     std::cout << "Max distance : " << maxDist << std::endl;
     for (uint32_t x = 0; x < _drawableSurfaceWidth; ++x) {
         for (uint32_t y = 0; y < _drawableSurfaceHeight; ++y) {
-            double hitDist = _image[y * _drawableSurfaceWidth + x].distanceWithViewer;
+            double hitDist = glm::min(_image[y * _drawableSurfaceWidth + x].distanceWithViewer, maxDist);
             _distanceMap[y * _drawableSurfaceWidth + x].color.red = (unsigned char)((hitDist / maxDist) * 255);
             _distanceMap[y * _drawableSurfaceWidth + x].color.green = (unsigned char)((hitDist / maxDist) * 255);
             _distanceMap[y * _drawableSurfaceWidth + x].color.blue = (unsigned char)((hitDist / maxDist) * 255);
