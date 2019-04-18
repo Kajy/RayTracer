@@ -8,11 +8,12 @@
 
 
 Scene::Scene():
-	_view(-20.0, 0, 0)
+	_view(-15.0, 0, 0),
+	_farestDistanceHited(MAX_DISTANCE)
 {
-    _shapeObjects.push_back(new Sphere());
-    _shapeObjects.push_back(new Sphere(0.0, -20.0, 0.0, 5, Color(255, 0, 0, 255)));
-    _shapeObjects.push_back(new Sphere(0.0, 20.0, 0.0, 5, Color(0, 255, 0, 255)));
+    _shapeObjects.push_back(new Sphere(0.0, 0.0, 0.0, 10, Color(255, 255, 255, 255)));
+  //  _shapeObjects.push_back(new Sphere(0.0, -20.0, 0.0, 5, Color(255, 0, 0, 255)));
+   // _shapeObjects.push_back(new Sphere(0.0, 20.0, 0.0, 5, Color(0, 255, 0, 255)));
 }
 
 Scene::~Scene()
@@ -25,7 +26,11 @@ Intersection		    Scene::renderScene(double x, double y) {
 
 	Ray ray(_posView, glm::normalize(glm::dvec3(FOV - _posView.x, (WINDOW_W / 2.0) - x - _posView.y, (WINDOW_H / 2.0) - y - _posView.z)));
 
-	return ray.launchRay(this->_shapeObjects);
+	Intersection newInter = ray.launchRay(this->_shapeObjects);
+
+	_farestDistanceHited = glm::min(_farestDistanceHited, newInter.distanceWithViewer);
+
+	return newInter;
 }
 
 Camera const    &Scene::getView() const {
@@ -34,4 +39,8 @@ Camera const    &Scene::getView() const {
 
 std::vector<AShapeObject *> const &Scene::getShapeObjects() const {
     return _shapeObjects;
+}
+
+double          Scene::getFarestDistanceHited() const {
+    return _farestDistanceHited;
 }

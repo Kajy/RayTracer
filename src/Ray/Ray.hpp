@@ -6,6 +6,7 @@
 #define RT_RAY_HPP
 
 #include <vector>
+#include <iostream>
 #include "Objects/AShapeObject.hpp"
 
 #ifdef _WIN32

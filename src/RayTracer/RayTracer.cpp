@@ -45,6 +45,7 @@ void    RayTracer::run()
               << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()
               << " ms" << std::endl;
 
+    this->_window.generateDistanceMap(this->_scene.getFarestDistanceHited());
     this->_window.render();
 
     while (!(_eventHandler.mayClose())) {

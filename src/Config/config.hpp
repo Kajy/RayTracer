@@ -8,9 +8,9 @@
 #define DEBUG false
 #define WINDOW_W 1280
 #define WINDOW_H 720
-#define MAX_DISTANCE 999
+#define MAX_DISTANCE 50
 
-#define	FOV	200
+#define	FOV	90
 
 #define	BLACK_COLOR	0x00000000
 #define WHITE_COLOR	0xFFFFFFFF

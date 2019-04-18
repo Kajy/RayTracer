@@ -32,12 +32,14 @@ public:
 
 	Camera const                        &getView() const;
     std::vector<AShapeObject *> const   &getShapeObjects() const;
+    double                              getFarestDistanceHited() const;
 
 private:
 	Camera	_view;
 
 	std::vector<AShapeObject *>   _shapeObjects;
-	Sphere	_sphereTest; //To remove just a test
+
+	double          _farestDistanceHited;
 
 };
 

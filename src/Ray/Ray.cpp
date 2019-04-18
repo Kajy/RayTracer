@@ -37,7 +37,6 @@ Intersection      Ray::searchClosestHit(std::vector<AShapeObject *> const &shape
             hit.color = it->getColor();
         }
     }
-
     return (hit);
 }
 
