@@ -10,7 +10,7 @@ Sphere::Sphere(): Sphere(0.0, 0.0, 0.0, 10)
 }
 
 Sphere::Sphere(double posX, double posY, double posZ, double radius):
-	AShapeObject(Color(255, 255, 255, 0), glm::dvec3(posX, posY, posZ)),
+	AHitable(Color(255, 255, 255, 0), glm::dvec3(posX, posY, posZ)),
 	_radius(radius)
 {
 
@@ -21,7 +21,7 @@ Sphere::~Sphere()
 }
 
 
-double		Sphere::calcCollision(glm::dvec3 view, glm::dvec3 vecDir) const {
+double		Sphere::hit(glm::dvec3 view, glm::dvec3 vecDir) const {
 
 	double a, b, c, d, k1, k2;
 

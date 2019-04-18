@@ -10,23 +10,22 @@
 #include "Config/config.hpp"
 #include "Objects/Camera/Camera.hpp"
 #include "Debug/Debug.hpp"
-#include <Objects/AShapeObject.hpp>
+#include <Objects/AHitable.hpp>
 
 #ifdef _WIN32
     #include "gtx/norm.hpp"
 #elif __APPLE__ or __linux__
-    #include <glm/detail/type_vec.hpp>
     #include <glm/vec3.hpp>
 #endif
 
-class Sphere : public AShapeObject
+class Sphere : public AHitable
 {
 public:
 	Sphere();
 	Sphere(double posX, double posY, double posZ, double radius);
 	~Sphere();
 
-	double		calcCollision(glm::dvec3 view, glm::dvec3 vecDir) const override;
+	double		hit(glm::dvec3 view, glm::dvec3 vecDir) const override;
 
 private:
 	double		_radius;

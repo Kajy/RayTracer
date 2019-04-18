@@ -9,7 +9,7 @@
     #include "gtx/norm.hpp"
 #elif __APPLE__ or __linux__
     #include <glm/glm.hpp>
-    #include <glm/detail/type_vec.hpp>
+
     #include <glm/vec3.hpp>
 #endif
 

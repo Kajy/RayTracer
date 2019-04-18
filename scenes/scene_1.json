@@ -1,0 +1,42 @@
+{
+  "camera": {
+    "position": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    }
+  },
+  "lights": [
+    {
+      "type": "spot",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "color": {
+        "red": 123,
+        "green": 1,
+        "blue": 234,
+        "alpha": 0
+      }
+    }
+  ],
+  "objects": [
+    {
+      "type": "sphere",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "radius": 10,
+      "color": {
+        "red": 255,
+        "green": 255,
+        "blue": 234,
+        "alpha": 0
+      }
+    }
+  ]
+}

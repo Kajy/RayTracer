@@ -2,7 +2,11 @@
 // Created by xw on 12/04/19.
 //
 
+#include <fstream>
+#include <nlohmann/json.hpp>
 #include "RayTracer.hpp"
+
+using namespace nlohmann;
 
 RayTracer::RayTracer():
     _window(WINDOW_W, WINDOW_H)
@@ -51,4 +55,39 @@ void    RayTracer::run()
         _eventHandler.wait();
         _eventHandler.manageWindowEvent();
     }
+}
+
+const Window &RayTracer::getWindow() const {
+    return _window;
+}
+
+const EventHandler &RayTracer::getEventHandler() const {
+    return _eventHandler;
+}
+
+void RayTracer::setEventHandler(const EventHandler &eventHandler) {
+    _eventHandler = eventHandler;
+}
+
+const Scene &RayTracer::getScene() const {
+    return _scene;
+}
+
+void RayTracer::setScene(const Scene &scene) {
+    _scene = scene;
+}
+
+Scene RayTracer::parse(const std::string &filename) {
+    std::vector<AHitable>   objectArr;
+    std::ifstream           file(filename);
+    json                    jsonFile;
+
+    try {
+        jsonFile << file;
+    } catch (nlohmann::detail::parse_error &e) {
+        Debug::printError(e.what());
+        Debug::printError("Exit");
+        std::exit(1);
+    }
+    return Scene();
 }
