@@ -42,8 +42,6 @@ Window::~Window() {
 void        Window::drawPixel(uint32_t color, uint32_t x, uint32_t y) const
 {
     _image[y * _drawableSurfaceWidth + x] = color;
-   // SDL_SetRenderDrawColor(_renderer.get(), ((color & 0xff000000) >> 24), ((color & 0x00ff0000) >> 16), ((color & 0x0000ff00) >> 8), 255);
-   // SDL_RenderDrawPoint(_renderer.get(), x, y);
 }
 
 void        Window::render() const

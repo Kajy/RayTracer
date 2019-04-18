@@ -57,6 +57,8 @@ function(setupLinux)
 			src/Objects/Sphere/Sphere.cpp
 			src/Objects/Sphere/Sphere.hpp
 			src/Objects/Camera/Camera.cpp
+			src/Ray/Ray.hpp
+			src/Ray/Ray.cpp
 			)
 
 	string(STRIP ${SDL2_LIBRARIES} SDL2_LIBRARIES)

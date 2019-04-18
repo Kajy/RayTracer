@@ -13,9 +13,13 @@
     #include <glm/vec3.hpp>
 #endif
 
+#include <vector>
+
 #include "Config/config.hpp"
+#include "Objects/AShapeObject.hpp"
 #include "Objects/Camera/Camera.hpp"
 #include "Objects/Sphere/Sphere.hpp"
+#include "Ray/Ray.hpp"
 
 class Scene
 {
@@ -23,11 +27,15 @@ public:
 	Scene();
 	~Scene();
 
-	bool	renderScene(double x, double y);
+	bool	        renderScene(double x, double y);
+
+	Camera const                        &getView() const;
+    std::vector<AShapeObject *> const   &getShapeObjects() const;
 
 private:
 	Camera	_view;
 
+	std::vector<AShapeObject *>   _shapeObjects;
 	Sphere	_sphereTest; //To remove just a test
 
 };
