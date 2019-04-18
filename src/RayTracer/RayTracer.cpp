@@ -36,8 +36,10 @@ void    RayTracer::run()
                 }
             }
         }));
-      future_vector[i].wait();
     }
+
+    for (uint32_t i = 0; i < cores; ++i)
+        future_vector[i].wait();
 
     auto end = std::chrono::steady_clock::now();
     std::cout << "Elapsed time in microseconds : "
