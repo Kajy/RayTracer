@@ -23,8 +23,8 @@ public:
     Ray(glm::dvec3 const &origin, glm::dvec3 const &dir);
     ~Ray();
 
-    bool        launchRay(std::vector<AShapeObject *> const &shapeObjects);
-    double      searchClosestHit(std::vector<AShapeObject *> const &shapeObjects);
+    Intersection        launchRay(std::vector<AShapeObject *> const &shapeObjects);
+    Intersection        searchClosestHit(std::vector<AShapeObject *> const &shapeObjects);
 
     void        setDirection(double x, double y, double z);
     glm::dvec3  getDirection() const;

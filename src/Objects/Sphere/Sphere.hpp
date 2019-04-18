@@ -23,7 +23,7 @@ class Sphere : public AShapeObject
 {
 public:
 	Sphere();
-	Sphere(double posX, double posY, double posZ, double radius);
+	Sphere(double posX, double posY, double posZ, double radius, Color color);
 	~Sphere();
 
 	double		calcCollision(glm::dvec3 view, glm::dvec3 vecDir) const override;

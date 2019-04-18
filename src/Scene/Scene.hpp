@@ -16,6 +16,7 @@
 #include <vector>
 
 #include "Config/config.hpp"
+#include "Common/Intersection.hpp"
 #include "Objects/AShapeObject.hpp"
 #include "Objects/Camera/Camera.hpp"
 #include "Objects/Sphere/Sphere.hpp"
@@ -27,7 +28,7 @@ public:
 	Scene();
 	~Scene();
 
-	bool	        renderScene(double x, double y);
+	Intersection	        renderScene(double x, double y);
 
 	Camera const                        &getView() const;
     std::vector<AShapeObject *> const   &getShapeObjects() const;

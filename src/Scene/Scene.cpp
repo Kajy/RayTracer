@@ -11,23 +11,21 @@ Scene::Scene():
 	_view(-20.0, 0, 0)
 {
     _shapeObjects.push_back(new Sphere());
+    _shapeObjects.push_back(new Sphere(0.0, -20.0, 0.0, 5, Color(255, 0, 0, 255)));
+    _shapeObjects.push_back(new Sphere(0.0, 20.0, 0.0, 5, Color(0, 255, 0, 255)));
 }
 
 Scene::~Scene()
 {
 }
 
-bool		    Scene::renderScene(double x, double y) {
+Intersection		    Scene::renderScene(double x, double y) {
 
     glm::dvec3	_posView = _view.getPosition();
 
-	//glm::dvec3	_vecDir(FOV - _posView.x, (WINDOW_W / 2.0) - x - _posView.y, (WINDOW_H / 2.0) - y - _posView.z);
-	//_vecDir = glm::normalize(_vecDir);
-
 	Ray ray(_posView, glm::normalize(glm::dvec3(FOV - _posView.x, (WINDOW_W / 2.0) - x - _posView.y, (WINDOW_H / 2.0) - y - _posView.z)));
 
-	return (ray.launchRay(this->_shapeObjects));
-
+	return ray.launchRay(this->_shapeObjects);
 }
 
 Camera const    &Scene::getView() const {

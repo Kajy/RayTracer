@@ -2,6 +2,7 @@
 // Created by xw on 18/04/19.
 //
 
+#include <Common/Intersection.hpp>
 #include "Ray.hpp"
 
 
@@ -20,17 +21,24 @@ Ray::~Ray() {
 
 }
 
-bool        Ray::launchRay(std::vector<AShapeObject *> const &shapeObjects)
+Intersection        Ray::launchRay(std::vector<AShapeObject *> const &shapeObjects)
 {
-    return (searchClosestHit(shapeObjects) > -1.0);
+    return searchClosestHit(shapeObjects);
 }
 
-double      Ray::searchClosestHit(std::vector<AShapeObject *> const &shapeObjects) {
+Intersection      Ray::searchClosestHit(std::vector<AShapeObject *> const &shapeObjects) {
 
-    double closestHit = -1.0;
+    Intersection    hit;
 
-    for (auto const &it: shapeObjects)
-        glm::max(closestHit, it->calcCollision(_origin, _dir));
+    for (auto const &it: shapeObjects) {
+        double newHitDistance = it->calcCollision(_origin, _dir);
+        if (newHitDistance > -1.0 && newHitDistance < hit.distanceWithViewer) {
+            hit.distanceWithViewer = newHitDistance;
+            hit.color = it->getColor();
+        }
+    }
+
+    return (hit);
 }
 
 void        Ray::setDirection(double x, double y, double z) {

@@ -5,15 +5,15 @@
 #include "Sphere.hpp"
 
 
-Sphere::Sphere(): Sphere(0.0, 0.0, 0.0, 10)
+Sphere::Sphere(): Sphere(0.0, 0.0, 0.0, 10, Color(255, 255, 255, 255))
 {
 }
 
-Sphere::Sphere(double posX, double posY, double posZ, double radius):
+Sphere::Sphere(double posX, double posY, double posZ, double radius, Color color):
 	AShapeObject(Color(255, 255, 255, 0), glm::dvec3(posX, posY, posZ)),
 	_radius(radius)
 {
-
+    _color = color;
 }
 
 Sphere::~Sphere()
