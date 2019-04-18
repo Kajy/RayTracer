@@ -28,7 +28,7 @@ public:
 	Scene();
 	~Scene();
 
-	Intersection	        renderScene(double x, double y);
+	Intersection	        renderScene(double x, double y, uint32_t maxWidth, uint32_t maxHeight);
 
 	Camera const                        &getView() const;
     std::vector<AShapeObject *> const   &getShapeObjects() const;

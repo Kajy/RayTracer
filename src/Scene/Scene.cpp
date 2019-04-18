@@ -20,11 +20,11 @@ Scene::~Scene()
 {
 }
 
-Intersection		    Scene::renderScene(double x, double y) {
+Intersection		    Scene::renderScene(double x, double y, uint32_t maxWidth, uint32_t maxHeight) {
 
     glm::dvec3	_posView = _view.getPosition();
 
-	Ray ray(_posView, glm::normalize(glm::dvec3(FOV - _posView.x, (WINDOW_W / 2.0) - x - _posView.y, (WINDOW_H / 2.0) - y - _posView.z)));
+	Ray ray(_posView, glm::normalize(glm::dvec3(FOV - _posView.x, (maxWidth / 2.0) - x - _posView.y, (maxHeight / 2.0) - y - _posView.z)));
 
 	Intersection newInter = ray.launchRay(this->_shapeObjects);
 

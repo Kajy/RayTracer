@@ -29,7 +29,7 @@ void    RayTracer::run()
             for (std::size_t index(i); index < max; index += cores) {
                 uint32_t x = index % width;
                 uint32_t y = index / width;
-                this->_window.drawPixel(this->_scene.renderScene(x, y), x, y);
+                this->_window.drawPixel(this->_scene.renderScene(x, y, width, height), x, y);
             }
         }));
     }
