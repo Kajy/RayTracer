@@ -12,8 +12,8 @@ Scene::Scene():
 	_farestDistanceHited(0)
 {
     _shapeObjects.push_back(new Sphere(0.0, 0.0, 0.0, 10, Color(255, 255, 255, 255)));
-  //  _shapeObjects.push_back(new Sphere(0.0, -20.0, 0.0, 5, Color(255, 0, 0, 255)));
-   // _shapeObjects.push_back(new Sphere(0.0, 20.0, 0.0, 5, Color(0, 255, 0, 255)));
+    _shapeObjects.push_back(new Sphere(0.0, -10.0, 0.0, 5, Color(255, 0, 0, 255)));
+    _shapeObjects.push_back(new Sphere(0.0, 10.0, 0.0, 5, Color(0, 255, 0, 255)));
 }
 
 Scene::~Scene()

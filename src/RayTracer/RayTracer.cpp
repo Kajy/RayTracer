@@ -26,7 +26,7 @@ void    RayTracer::run()
     auto start = std::chrono::steady_clock::now();
     for (uint32_t i = 0; i < cores; ++i) {
       future_vector.emplace_back(std::async(std::launch::async, [=]() {
-            for (std::size_t index(i); index < max; index += cores) {
+            for (uint32_t index(i); index < max; index += cores) {
                 uint32_t x = index % width;
                 uint32_t y = index / width;
                 this->_window.drawPixel(this->_scene.renderScene(x, y, width, height), x, y);
