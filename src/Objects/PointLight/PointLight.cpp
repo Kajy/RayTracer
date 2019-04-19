@@ -4,10 +4,8 @@
 
 #include "PointLight.hpp"
 
-PointLight::PointLight(double x, double y, double z) : AObject(glm::dvec3(x, y, z))
+PointLight::PointLight(double posX, double posY, double posZ) :
+    AObject(glm::dvec3(posX, posY, posZ))
 {
-}
 
-PointLight::~PointLight()
-{
 }
