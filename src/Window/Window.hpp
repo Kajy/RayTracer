@@ -8,6 +8,10 @@
 #include <memory>
 #include <SDL2/SDL.h>
 
+#include <glm/glm.hpp>
+
+#include "Config/config.hpp"
+#include "Common/Intersection.hpp"
 #include "Debug/Debug.hpp"
 
 struct SDLWindowDeleter {
@@ -28,8 +32,9 @@ public:
     Window(int w, int h);
     ~Window();
 
-    void    drawPixel(uint32_t color, uint32_t x, uint32_t y) const;
+    void    drawPixel(Intersection inter, uint32_t x, uint32_t y) const;
     void    render() const;
+    void    generateDistanceMap(double maxDist);
 
 private:
 
@@ -38,18 +43,19 @@ private:
 
 private:
 
-    uint32_t    _windowWidth;
-    uint32_t    _windowHeight;
-    int         _drawableSurfaceWidth;
-    int         _drawableSurfaceHeight;
+    uint32_t        _windowWidth;
+    uint32_t        _windowHeight;
+    int             _drawableSurfaceWidth;
+    int             _drawableSurfaceHeight;
 
-    uint32_t    *_image;
+    Intersection    *_image;
+    Intersection    *_distanceMap;
 
 public:
     int getDrawableSurfaceWidth() const;
     int getDrawableSurfaceHeight() const;
 
-    uint32_t *getImage() const;
+    Intersection *getImage() const;
 
 };
 
