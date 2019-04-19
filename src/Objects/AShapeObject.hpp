@@ -5,7 +5,10 @@
 #ifndef RT_ASHAPEOBJECT_HPP
 #define RT_ASHAPEOBJECT_HPP
 
+#include <glm/gtx/norm.hpp>
+
 #include "AObject.hpp"
+#include "Common/Intersection.hpp"
 #include "Common/Color.hpp"
 
 class AShapeObject : public AObject {
@@ -51,7 +54,8 @@ public:
         _color = color;
     }
 
-    virtual double calcCollision(glm::dvec3 view, glm::dvec3 vecDir) const = 0;
+    virtual Intersection    calcCollision(glm::dvec3 view, glm::dvec3 vecDir) const = 0;
+    virtual glm::dvec3      calcNormal(glm::dvec3 hitPoint) const = 0;
 };
 
 

@@ -2,6 +2,8 @@
 // Created by xw on 13/04/19.
 //
 
+#include <Common/Intersection.hpp>
+#include <glm/detail/type_vec.hpp>
 #include "Sphere.hpp"
 
 
@@ -21,9 +23,10 @@ Sphere::~Sphere()
 }
 
 
-double		Sphere::calcCollision(glm::dvec3 view, glm::dvec3 vecDir) const {
+Intersection		Sphere::calcCollision(glm::dvec3 view, glm::dvec3 vecDir) const {
 
-	double a, b, c, d, k1, k2;
+	double          a, b, c, d, k1, k2;
+    Intersection    hit;
 
 	a = (vecDir.x * vecDir.x) + (vecDir.y * vecDir.y) + (vecDir.z * vecDir.z);
 	b = 2 * (((view.x - _position.x) * vecDir.x) + ((view.y - _position.y) * vecDir.y) + ((view.z - _position.z) * vecDir.z));
@@ -39,9 +42,16 @@ double		Sphere::calcCollision(glm::dvec3 view, glm::dvec3 vecDir) const {
 #if  DEBUG
 		Debug::printInfo(std::string("Sphere: Collision Distance [" + std::to_string(finalDist) + "]").c_str());
 #endif //  DEBUG
-		return finalDist;
+		hit.distanceWithViewer = finalDist;
+		hit.hitPosition = view + vecDir * finalDist;
+		hit.color = _color;
+		hit.isHit = true;
 	}
-	return (-1);
+	return (hit);
+}
+
+glm::dvec3          Sphere::calcNormal(glm::dvec3 hitPoint) const {
+    return glm::normalize(glm::dvec3(hitPoint - _position));
 }
 
 double Sphere::getRadius() const {

@@ -53,7 +53,7 @@ void        Window::render() const
 {
     for (uint32_t x = 0; x < _drawableSurfaceWidth; ++x) {
         for (uint32_t y = 0; y < _drawableSurfaceHeight; ++y) {
-            Color color = _distanceMap[y * _drawableSurfaceWidth + x].color;
+            Color color = _image[y * _drawableSurfaceWidth + x].color;
             SDL_SetRenderDrawColor(_renderer.get(), color.red, color.green, color.blue, 255);
             SDL_RenderDrawPoint(_renderer.get(), x, y);
         }
