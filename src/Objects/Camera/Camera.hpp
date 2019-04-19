@@ -7,9 +7,8 @@
 
 #include "../AObject.hpp"
 #ifdef _WIN32
-    #include "vec3.hpp"
+    #include "glm/vec3.hpp"
 #elif __APPLE__ or __linux__
-    #include <glm/detail/type_vec.hpp>
     #include <glm/vec3.hpp>
 #endif
 

@@ -13,9 +13,8 @@
 #include <Objects/AShapeObject.hpp>
 
 #ifdef _WIN32
-    #include "gtx/norm.hpp"
+    #include "glm/gtx/norm.hpp"
 #elif __APPLE__ or __linux__
-    #include <glm/detail/type_vec.hpp>
     #include <glm/vec3.hpp>
 #endif
 
@@ -23,7 +22,7 @@ class Sphere : public AShapeObject
 {
 public:
 	Sphere();
-	Sphere(double posX, double posY, double posZ, double radius);
+	Sphere(double posX, double posY, double posZ, double radius, Color color);
 	~Sphere();
 
 	double		calcCollision(glm::dvec3 view, glm::dvec3 vecDir) const override;

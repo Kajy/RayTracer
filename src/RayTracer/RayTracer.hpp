@@ -12,6 +12,7 @@
 #include <algorithm>
 #include <numeric>
 #include <future>
+#include <thread>
 
 #include "Config/config.hpp"
 #include "Window/Window.hpp"

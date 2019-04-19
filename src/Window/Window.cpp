@@ -25,7 +25,8 @@ Window::Window(int w, int h):
 
     SDL_GL_GetDrawableSize(_window.get(), &_drawableSurfaceWidth, &_drawableSurfaceHeight);
 
-    _image = new uint32_t[_drawableSurfaceHeight * _drawableSurfaceWidth];
+    _image = new Intersection[_drawableSurfaceHeight * _drawableSurfaceWidth];
+    _distanceMap = new Intersection[_drawableSurfaceHeight * _drawableSurfaceWidth];
 
     if ((_renderer = std::unique_ptr<SDL_Renderer, SDLRendererDeleter>(SDL_CreateRenderer(_window.get(), -1, SDL_RENDERER_ACCELERATED))) == nullptr) {
         Debug::printError("Error when creating renderer");
@@ -39,23 +40,37 @@ Window::~Window() {
 }
 
 
-void        Window::drawPixel(uint32_t color, uint32_t x, uint32_t y) const
+void        Window::drawPixel(Intersection inter, uint32_t x, uint32_t y) const
 {
-    _image[y * _drawableSurfaceWidth + x] = color;
-   // SDL_SetRenderDrawColor(_renderer.get(), ((color & 0xff000000) >> 24), ((color & 0x00ff0000) >> 16), ((color & 0x0000ff00) >> 8), 255);
-   // SDL_RenderDrawPoint(_renderer.get(), x, y);
+    _image[y * _drawableSurfaceWidth + x].color.red = inter.color.red;
+    _image[y * _drawableSurfaceWidth + x].color.green = inter.color.green;
+    _image[y * _drawableSurfaceWidth + x].color.blue = inter.color.blue;
+    _image[y * _drawableSurfaceWidth + x].color.alpha = 255;
+    _image[y * _drawableSurfaceWidth + x].distanceWithViewer = inter.distanceWithViewer;
 }
 
 void        Window::render() const
 {
     for (uint32_t x = 0; x < _drawableSurfaceWidth; ++x) {
         for (uint32_t y = 0; y < _drawableSurfaceHeight; ++y) {
-            uint32_t color = _image[y * _drawableSurfaceWidth + x];
-            SDL_SetRenderDrawColor(_renderer.get(), ((color & 0xff000000) >> 24), ((color & 0x00ff0000) >> 16), ((color & 0x0000ff00) >> 8), 255);
+            Color color = _distanceMap[y * _drawableSurfaceWidth + x].color;
+            SDL_SetRenderDrawColor(_renderer.get(), color.red, color.green, color.blue, 255);
             SDL_RenderDrawPoint(_renderer.get(), x, y);
         }
     }
     SDL_RenderPresent(_renderer.get());
+}
+
+void        Window::generateDistanceMap(double maxDist) {
+    std::cout << "Max distance : " << maxDist << std::endl;
+    for (uint32_t x = 0; x < _drawableSurfaceWidth; ++x) {
+        for (uint32_t y = 0; y < _drawableSurfaceHeight; ++y) {
+            double hitDist = glm::min(_image[y * _drawableSurfaceWidth + x].distanceWithViewer, maxDist);
+            _distanceMap[y * _drawableSurfaceWidth + x].color.red = (unsigned char)((hitDist / maxDist) * 255);
+            _distanceMap[y * _drawableSurfaceWidth + x].color.green = (unsigned char)((hitDist / maxDist) * 255);
+            _distanceMap[y * _drawableSurfaceWidth + x].color.blue = (unsigned char)((hitDist / maxDist) * 255);
+        }
+    }
 }
 
 int         Window::getDrawableSurfaceWidth() const {
@@ -67,6 +82,6 @@ int         Window::getDrawableSurfaceHeight() const {
     return _drawableSurfaceHeight;
 }
 
-uint32_t    *Window::getImage() const {
+Intersection    *Window::getImage() const {
     return _image;
 }
