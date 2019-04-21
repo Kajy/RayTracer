@@ -2,7 +2,6 @@
 #pragma comment (lib, "SDL2main.lib")
 
 #include <iostream>
-#include <libfswatch/c++/monitor_factory.hpp>
 #include <signal.h>
 #include <unistd.h>
 #include "RayTracer/RayTracer.hpp"
