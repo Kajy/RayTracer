@@ -6,10 +6,6 @@
 #include <nlohmann/json.hpp>
 #include "RayTracer.hpp"
 #include <Common/Parser.hpp>
-#include <csignal>
-#include <unistd.h>
-#include <sys/event.h>
-#include <fcntl.h>
 #include <Objects/ALight.hpp>
 #include <Common/Utils.hpp>
 
