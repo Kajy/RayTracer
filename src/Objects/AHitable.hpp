@@ -52,6 +52,7 @@ public:
     }
 
     virtual double hit(glm::dvec3 view, glm::dvec3 vecDir) const = 0;
+    virtual ~AHitable() = default;
 };
 
 

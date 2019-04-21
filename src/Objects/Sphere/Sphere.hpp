@@ -9,7 +9,7 @@
 #include <cmath>
 #include "Config/config.hpp"
 #include "Objects/Camera/Camera.hpp"
-#include "Debug/Debug.hpp"
+#include "Common/Debug.hpp"
 #include <Objects/AHitable.hpp>
 
 #ifdef _WIN32
@@ -23,10 +23,9 @@ class Sphere : public AHitable
 public:
 	Sphere();
 	Sphere(double posX, double posY, double posZ, double radius, Color color);
-	~Sphere();
+	~Sphere() = default;
 
 	double		hit(glm::dvec3 view, glm::dvec3 vecDir) const override;
-
 private:
 	double		_radius;
 public:

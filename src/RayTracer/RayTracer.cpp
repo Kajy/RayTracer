@@ -5,6 +5,13 @@
 #include <fstream>
 #include <nlohmann/json.hpp>
 #include "RayTracer.hpp"
+#include <Common/Parser.hpp>
+#include <csignal>
+#include <unistd.h>
+#include <sys/event.h>
+#include <fcntl.h>
+#include <Objects/ALight.hpp>
+#include <Common/Utils.hpp>
 
 using namespace nlohmann;
 
@@ -19,8 +26,9 @@ RayTracer::~RayTracer()
     Debug::printInfo("Bye !");
 }
 
-void    RayTracer::run()
+void    RayTracer::renderLoop()
 {
+
     uint32_t width = _window.getDrawableSurfaceWidth();
     uint32_t height = _window.getDrawableSurfaceHeight();
     std::size_t max = width * height;
@@ -29,7 +37,7 @@ void    RayTracer::run()
 
     auto start = std::chrono::steady_clock::now();
     for (uint32_t i = 0; i < cores; ++i) {
-      future_vector.emplace_back(std::async(std::launch::async, [=]() {
+        future_vector.emplace_back(std::async(std::launch::async, [=]() {
             for (uint32_t index(i); index < max; index += cores) {
                 uint32_t x = index % width;
                 uint32_t y = index / width;
@@ -51,7 +59,11 @@ void    RayTracer::run()
 
     this->_window.generateDistanceMap(this->_scene.getFarestDistanceHited());
     this->_window.render();
+}
 
+void    RayTracer::run()
+{
+    this->renderLoop();
     while (!(_eventHandler.mayClose())) {
         _eventHandler.wait();
         _eventHandler.manageWindowEvent();
@@ -78,17 +90,69 @@ void RayTracer::setScene(const Scene &scene) {
     _scene = scene;
 }
 
+static void parseCamera(Scene &scene, const json &json) {
+    Camera camera = Parser::ParseCamera(json["camera"]);
+    scene.setView(camera);
+}
+
+static void parseObjects(Scene &scene, const json &jsonFile) {
+    std::vector<AHitable *> objectsParsed;
+
+    for (const json &object: jsonFile["objects"]) {
+        const std::string &type = object["type"].get<std::string>();
+        Debug::printInfo((std::string("PARSING OBJECT : ") + type).c_str());
+        switch (Utils::str2int(type.c_str())) {
+            case Utils::str2int("sphere"):
+                Sphere *sphere = Parser::ParseSphere(object);
+                objectsParsed.push_back(Parser::ParseSphere(object));
+                Debug::printPosition(sphere, "sphere");
+                break;
+        }
+    }
+    scene.setHitableObjects(objectsParsed);
+}
+
+static void parseLights(Scene &scene, const json &jsonFile) {
+    std::vector<ALight *>   lightsParsed;
+
+    for (const json &objectLight : jsonFile["lights"]) {
+        const std::string &type = objectLight["type"].get<std::string>();
+        Debug::printInfo((std::string("PARSING LIGHT : ") + type).c_str());
+        switch (Utils::str2int(type.c_str())) {
+            case Utils::str2int("point"):
+                lightsParsed.push_back(Parser::ParseLight<PointLight>(objectLight));
+                break;
+        }
+    }
+
+    scene.setLights(lightsParsed);
+}
+
 Scene RayTracer::parse(const std::string &filename) {
     std::vector<AHitable>   objectArr;
     std::ifstream           file(filename);
     json                    jsonFile;
+    Scene                   scene;
 
     try {
-        jsonFile << file;
+        file >> jsonFile;
     } catch (nlohmann::detail::parse_error &e) {
         Debug::printError(e.what());
         Debug::printError("Exit");
         std::exit(1);
     }
-    return Scene();
+
+    parseCamera(scene, jsonFile);
+    parseObjects(scene, jsonFile);
+    parseLights(scene, jsonFile);
+
+    return scene;
+}
+
+const std::string &RayTracer::getFilename() const {
+    return _filename;
+}
+
+void RayTracer::setFilename(const std::string &filename) {
+    _filename = filename;
 }

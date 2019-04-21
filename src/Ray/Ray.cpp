@@ -21,17 +21,17 @@ Ray::~Ray() {
 
 }
 
-Intersection        Ray::launchRay(std::vector<AShapeObject *> const &shapeObjects)
+Intersection        Ray::launchRay(std::vector<AHitable *> const &shapeObjects)
 {
     return searchClosestHit(shapeObjects);
 }
 
-Intersection      Ray::searchClosestHit(std::vector<AShapeObject *> const &shapeObjects) {
+Intersection      Ray::searchClosestHit(std::vector<AHitable *> const &shapeObjects) {
 
     Intersection    hit;
 
     for (auto const &it: shapeObjects) {
-        double newHitDistance = it->calcCollision(_origin, _dir);
+        double newHitDistance = it->hit(_origin, _dir);
         if (newHitDistance > -1.0 && newHitDistance < hit.distanceWithViewer) {
             hit.distanceWithViewer = newHitDistance;
             hit.color = it->getColor();

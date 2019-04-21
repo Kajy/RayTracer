@@ -16,11 +16,6 @@ Sphere::Sphere(double posX, double posY, double posZ, double radius, Color color
     _color = color;
 }
 
-Sphere::~Sphere()
-{
-}
-
-
 double		Sphere::hit(glm::dvec3 view, glm::dvec3 vecDir) const {
 
 	double a, b, c, d, k1, k2;

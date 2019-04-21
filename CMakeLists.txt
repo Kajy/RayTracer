@@ -31,7 +31,7 @@ function(setupWindows)
 			src/Config/config.hpp
 			src/EventHandler/EventHandler.hpp
 			src/EventHandler/EventHandler.cpp
-			src/Debug/Debug.hpp
+			src/Common/Debug.hpp
 			src/Objects/Camera/Camera.cpp
 			src/Scene/Scene.cpp
 			src/Objects/Sphere/Sphere.cpp)
@@ -61,10 +61,13 @@ function(setupLinux)
 			src/Ray/Ray.cpp
 			src/Objects/PointLight/PointLight.hpp
 			src/Objects/PointLight/PointLight.cpp
+			src/Common/Parser.hpp
+			src/Objects/ALight.hpp
+			src/Common/Utils.hpp
 			)
 
 	string(STRIP ${SDL2_LIBRARIES} SDL2_LIBRARIES)
-	target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES} pthread)
+	target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES} pthread )
 endfunction()
 
 if (WIN32)
