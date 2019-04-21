@@ -1,7 +1,7 @@
 {
   "camera": {
     "position": {
-      "x": 0,
+      "x": -15.0,
       "y": 0,
       "z": 0
     }
@@ -27,9 +27,9 @@
     {
       "type": "sphere",
       "position": {
-        "x": 0,
-        "y": 0,
-        "z": 0
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
       },
       "radius": 10,
       "refractionIndex": 0,
@@ -45,9 +45,9 @@
     {
       "type": "sphere",
       "position": {
-        "x": 0,
-        "y": -10,
-        "z": 0
+        "x": 0.0,
+        "y": -10.0,
+        "z": 0.0
       },
       "radius": 5,
       "refractionIndex": 0,
@@ -63,9 +63,9 @@
     {
       "type": "sphere",
       "position": {
-        "x": 0,
-        "y": 10,
-        "z": 0
+        "x": 0.0,
+        "y": 10.0,
+        "z": 0.0
       },
       "radius": 5,
       "refractionIndex": 0,
