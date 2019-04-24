@@ -9,8 +9,8 @@
 #include <cmath>
 #include "Config/config.hpp"
 #include "Objects/Camera/Camera.hpp"
-#include "Debug/Debug.hpp"
-#include <Objects/AShapeObject.hpp>
+#include "Common/Debug.hpp"
+#include <Objects/AHitable.hpp>
 
 #ifdef _WIN32
     #include "glm/gtx/norm.hpp"
@@ -18,15 +18,14 @@
     #include <glm/vec3.hpp>
 #endif
 
-class Sphere : public AShapeObject
+class Sphere : public AHitable
 {
 public:
 	Sphere();
 	Sphere(double posX, double posY, double posZ, double radius, Color color);
-	~Sphere();
+	~Sphere() = default;
 
-	double		calcCollision(glm::dvec3 view, glm::dvec3 vecDir) const override;
-
+	double		hit(glm::dvec3 view, glm::dvec3 vecDir) const override;
 private:
 	double		_radius;
 public:

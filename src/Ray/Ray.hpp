@@ -7,7 +7,7 @@
 
 #include <vector>
 #include <iostream>
-#include "Objects/AShapeObject.hpp"
+#include "Objects/AHitable.hpp"
 
 #ifdef _WIN32
     #include "glm/gtx/norm.hpp"
@@ -23,8 +23,8 @@ public:
     Ray(glm::dvec3 const &origin, glm::dvec3 const &dir);
     ~Ray();
 
-    Intersection        launchRay(std::vector<AShapeObject *> const &shapeObjects);
-    Intersection        searchClosestHit(std::vector<AShapeObject *> const &shapeObjects);
+    Intersection        launchRay(std::vector<AHitable *> const &shapeObjects);
+    Intersection        searchClosestHit(std::vector<AHitable *> const &shapeObjects);
 
     void        setDirection(double x, double y, double z);
     glm::dvec3  getDirection() const;

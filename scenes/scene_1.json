@@ -1,0 +1,82 @@
+{
+  "camera": {
+    "position": {
+      "x": -15.0,
+      "y": 0,
+      "z": 0
+    }
+  },
+  "lights": [
+    {
+      "type": "point",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "color": {
+        "red": 123,
+        "green": 122,
+        "blue": 23,
+        "alpha": 0
+      },
+      "intensity": 100
+    }
+  ],
+  "objects": [
+    {
+      "type": "sphere",
+      "position": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "radius": 10,
+      "refractionIndex": 0,
+      "shining": 0,
+
+      "color": {
+        "red": 255,
+        "green": 255,
+        "blue": 255,
+        "alpha": 255
+      }
+    },
+    {
+      "type": "sphere",
+      "position": {
+        "x": 0.0,
+        "y": -10.0,
+        "z": 0.0
+      },
+      "radius": 5,
+      "refractionIndex": 0,
+      "shining": 0,
+
+      "color": {
+        "red": 255,
+        "green": 0,
+        "blue": 0,
+        "alpha": 255
+      }
+    },
+    {
+      "type": "sphere",
+      "position": {
+        "x": 0.0,
+        "y": 10.0,
+        "z": 0.0
+      },
+      "radius": 5,
+      "refractionIndex": 0,
+      "shining": 0,
+
+      "color": {
+        "red": 0,
+        "green": 255,
+        "blue": 0,
+        "alpha": 255
+      }
+    }
+  ]
+}
