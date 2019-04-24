@@ -26,6 +26,12 @@ struct SDLRendererDeleter {
     }
 };
 
+struct SDLTextureDeleter {
+    inline void operator()(SDL_Texture* texture) {
+        SDL_DestroyTexture(texture);
+    }
+};
+
 class   Window {
 
 public:
@@ -39,7 +45,17 @@ public:
 private:
 
     std::unique_ptr<SDL_Window, SDLWindowDeleter>       _window;
+public:
+    const std::unique_ptr<SDL_Window, SDLWindowDeleter> &getWindow() const;
+
+private:
     std::unique_ptr<SDL_Renderer, SDLRendererDeleter>   _renderer;
+    std::unique_ptr<SDL_Texture, SDLTextureDeleter>     _texture;
+public:
+    const std::unique_ptr<SDL_Texture, SDLTextureDeleter> &getTexture() const;
+
+public:
+    const std::unique_ptr<SDL_Renderer, SDLRendererDeleter> &getRenderer() const;
 
 private:
 
