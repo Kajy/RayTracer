@@ -18,6 +18,7 @@ private:
     AObject() = default;
 protected:
     AObject(const glm::dvec3 &position) : _position(position) {};
+    virtual ~AObject() = default;
 public:
     void            setPosition(const glm::dvec3 &position) {
         _position = position;

@@ -12,7 +12,7 @@
 
 #include "Config/config.hpp"
 #include "Common/Intersection.hpp"
-#include "Debug/Debug.hpp"
+#include "Common/Debug.hpp"
 
 struct SDLWindowDeleter {
     inline void operator()(SDL_Window* window) {
