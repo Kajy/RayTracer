@@ -17,7 +17,7 @@ public:
     static void printError(char const *msg) { std::cout << "[ERROR]\t\t" << msg << std::endl; }
     static void printPosition(const AObject *obj, const std::string &type) {
         const glm::dvec3 position = obj->getPosition();
-        std::cout << "[" << type << "]\t\t" << position.x << " " << position.y << " " << position.z << std::endl;
+        std::cout << "[" << type.c_str() << "]\t\t" << position.x << " " << position.y << " " << position.z << std::endl;
     }
 };
 

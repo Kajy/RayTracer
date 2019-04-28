@@ -11,6 +11,7 @@
 #include "Objects/Camera/Camera.hpp"
 #include "Common/Debug.hpp"
 #include <Objects/AHitable.hpp>
+#include <Objects/ALight.hpp>
 
 #ifdef _WIN32
 #include "glm/gtx/norm.hpp"
