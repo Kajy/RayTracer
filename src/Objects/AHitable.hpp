@@ -51,7 +51,7 @@ public:
         _color = color;
     }
 
-    virtual double hit(glm::dvec3 view, glm::dvec3 vecDir) const = 0;
+    virtual double hit(const glm::dvec3 &view, const glm::dvec3 &vecDir) const = 0;
     virtual ~AHitable() = default;
 };
 

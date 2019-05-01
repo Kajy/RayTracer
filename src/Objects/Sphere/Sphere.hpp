@@ -25,7 +25,7 @@ public:
 	Sphere(double posX, double posY, double posZ, double radius, Color color);
 	~Sphere() = default;
 
-	double		hit(glm::dvec3 view, glm::dvec3 vecDir) const override;
+	double		hit(const glm::dvec3 &view, const glm::dvec3 &vecDir) const override;
 private:
 	double		_radius;
 public:

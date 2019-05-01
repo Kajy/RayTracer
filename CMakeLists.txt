@@ -69,6 +69,7 @@ function(setupLinux)
 			src/Common/Parser.hpp
 			src/Objects/ALight.hpp
 			src/Common/Utils.hpp
+            src/Objects/Plane/Plane.cpp
 			)
 
 	string(STRIP ${SDL2_LIBRARIES} SDL2_LIBRARIES)
