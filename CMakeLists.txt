@@ -36,7 +36,9 @@ function(setupWindows)
 			src/Common/Debug.hpp
 			src/Objects/Camera/Camera.cpp
 			src/Scene/Scene.cpp
-			src/Objects/Sphere/Sphere.cpp)
+			src/Objects/Sphere/Sphere.cpp
+			src/Objects/Plane/Plane.cpp
+			)
 
 	target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARY})
 	target_link_libraries(${PROJECT_NAME} ${SDL2MAIN_LIBRARY})
