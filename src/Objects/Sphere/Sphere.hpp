@@ -25,11 +25,8 @@ public:
 	Sphere(double posX, double posY, double posZ, double radius, Color color);
 	~Sphere() = default;
 
-	glm::dvec3          calcNormal(glm::dvec3 hitPoint) const override;
-
-
-
-	Intersection		hit(glm::dvec3 view, glm::dvec3 vecDir) const override;
+	glm::dvec3          calcNormal(const glm::dvec3 &hitPoint) const override;
+	Intersection		    hit(const glm::dvec3 &view, const glm::dvec3 &vecDir) const override;
 private:
 	double		_radius;
 public:

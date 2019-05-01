@@ -9,6 +9,7 @@
 #include <glm/glm.hpp>
 #include <Objects/Sphere/Sphere.hpp>
 #include <Objects/PointLight/PointLight.hpp>
+#include <Objects/Plane/Plane.hpp>
 
 using namespace nlohmann;
 
@@ -46,8 +47,8 @@ public:
         const json &colorJson = j["color"];
         return Color {
             colorJson["red"],
-            colorJson["green"],
             colorJson["blue"],
+            colorJson["green"],
             colorJson["alpha"]
         };
     }
@@ -63,6 +64,11 @@ public:
         return Camera {ParsePosition(j)};
     }
 
+    static Plane        *ParsePlane(const json &j) {
+        Plane           *plane = ParseHitableObject<Plane>(j);
+        plane->setHeight(j["height"]);
 
+        return plane;
+    }
 };
 #endif //RT_PARSER_HPP

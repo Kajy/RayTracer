@@ -3,9 +3,6 @@
 //
 
 #include <Common/Intersection.hpp>
-#ifdef __APPLE__
-#include <glm/detail/type_vec.hpp>
-#endif
 #include "Sphere.hpp"
 
 
@@ -20,8 +17,7 @@ Sphere::Sphere(double posX, double posY, double posZ, double radius, Color color
     _color = color;
 }
 
-
-Intersection		Sphere::hit(glm::dvec3 view, glm::dvec3 vecDir) const {
+Intersection		Sphere::hit(const glm::dvec3 &view, const glm::dvec3 &vecDir) const {
 
 	double          a, b, c, d, k1, k2;
     Intersection    hit;
@@ -48,7 +44,7 @@ Intersection		Sphere::hit(glm::dvec3 view, glm::dvec3 vecDir) const {
 	return (hit);
 }
 
-glm::dvec3          Sphere::calcNormal(glm::dvec3 hitPoint) const {
+glm::dvec3          Sphere::calcNormal(const glm::dvec3 &hitPoint) const {
     return glm::normalize(glm::dvec3(hitPoint - _position));
 }
 

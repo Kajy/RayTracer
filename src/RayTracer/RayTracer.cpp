@@ -8,6 +8,7 @@
 #include <Common/Parser.hpp>
 #include <Objects/ALight.hpp>
 #include <Common/Utils.hpp>
+#include <Objects/Plane/Plane.hpp>
 
 using namespace nlohmann;
 
@@ -98,11 +99,18 @@ static void parseObjects(Scene &scene, const json &jsonFile) {
         const std::string &type = object["type"].get<std::string>();
         Debug::printInfo((std::string("PARSING OBJECT : ") + type).c_str());
         switch (Utils::str2int(type.c_str())) {
-            case Utils::str2int("sphere"):
+            case Utils::str2int("sphere"): {
                 Sphere *sphere = Parser::ParseSphere(object);
-                objectsParsed.push_back(Parser::ParseSphere(object));
+                objectsParsed.push_back(sphere);
                 Debug::printPosition(sphere, "sphere");
                 break;
+            }
+            case Utils::str2int("plane"): {
+                Plane *plane = Parser::ParsePlane(object);
+                objectsParsed.push_back(plane);
+                Debug::printPosition(plane, "plane");
+                break;
+            }
         }
     }
     scene.setHitableObjects(objectsParsed);
