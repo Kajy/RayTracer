@@ -5,7 +5,10 @@
 #ifndef RT_AHITABLE_HPP
 #define RT_AHITABLE_HPP
 
+#include <glm/gtx/norm.hpp>
+
 #include "AObject.hpp"
+#include "Common/Intersection.hpp"
 #include "Common/Color.hpp"
 
 class AHitable : public AObject {
@@ -51,8 +54,11 @@ public:
         _color = color;
     }
 
-    virtual double hit(glm::dvec3 view, glm::dvec3 vecDir) const = 0;
+    virtual glm::dvec3      calcNormal(glm::dvec3 hitPoint) const = 0;
+
+    virtual Intersection hit(glm::dvec3 view, glm::dvec3 vecDir) const = 0;
     virtual ~AHitable() = default;
+
 };
 
 
