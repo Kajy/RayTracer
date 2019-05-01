@@ -20,6 +20,7 @@
 #include "Objects/AHitable.hpp"
 #include "Objects/Camera/Camera.hpp"
 #include "Objects/Sphere/Sphere.hpp"
+#include "Objects/PointLight/PointLight.hpp"
 #include "Ray/Ray.hpp"
 
 class Scene
@@ -29,6 +30,7 @@ public:
 	~Scene();
 
 	Intersection	        renderScene(double x, double y, uint32_t maxWidth, uint32_t maxHeight);
+	Intersection            renderLightsEffect(Intersection const &inter);
 
 	Camera const                        &getView() const;
     std::vector<AHitable *> const       &getHitableObjects() const;
