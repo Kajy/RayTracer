@@ -16,13 +16,15 @@ public:
     void        wait();
     void        manageWindowEvent();
 
-    bool        mayClose();
+    bool        mayClose() const;
 
 
     SDL_WindowEventID     getWindowEvent() const;
 
 private:
     SDL_Event           _eventHandler;
+public:
+    const SDL_Event &getEventHandler() const;
 
 private:
     bool                _closeWindow;

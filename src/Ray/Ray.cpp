@@ -21,17 +21,19 @@ Ray::~Ray() {
 
 }
 
-Intersection    Ray::launchRay(std::vector<AShapeObject *> const &shapeObjects)
+
+Intersection        Ray::launchRay(std::vector<AHitable *> const &shapeObjects)
 {
     return searchClosestHit(shapeObjects);
 }
 
-Intersection    Ray::searchClosestHit(std::vector<AShapeObject *> const &shapeObjects) {
+
+Intersection      Ray::searchClosestHit(std::vector<AHitable *> const &shapeObjects) {
 
     Intersection    hit;
 
     for (auto const &it: shapeObjects) {
-        Intersection newHit = it->calcCollision(_origin, _dir);
+        Intersection newHit = it->hit(_origin, _dir);
         if (newHit.distanceWithViewer < hit.distanceWithViewer) {
             hit = newHit;
             hit.normal = it->calcNormal(glm::dvec3(_origin + _dir * hit.distanceWithViewer));

@@ -17,11 +17,13 @@ function(setupWindows)
 	set(SDL2_PATH "C:/Libraries/SDL")
 
 	find_package(SDL2 REQUIRED)
+    find_library(SDL2_image NAMES SDL2_image)
 
 	print_all_variables()
 
 	include_directories(${SDL2_INCLUDE_DIR})
 	include_directories(${PROJECT_SOURCE_DIR}/src)
+    include_directories(${SDL2_image_INCLUDE_DIRS})
 
 	add_executable(RT
 			src/main.cpp
@@ -31,20 +33,23 @@ function(setupWindows)
 			src/Config/config.hpp
 			src/EventHandler/EventHandler.hpp
 			src/EventHandler/EventHandler.cpp
-			src/Debug/Debug.hpp
+			src/Common/Debug.hpp
 			src/Objects/Camera/Camera.cpp
 			src/Scene/Scene.cpp
 			src/Objects/Sphere/Sphere.cpp)
 
 	target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARY})
 	target_link_libraries(${PROJECT_NAME} ${SDL2MAIN_LIBRARY})
+    target_link_libraries(${PROJECT_NAME} ${SDL2_image})
 endfunction()
 
 function(setupLinux)
 	find_package(SDL2 REQUIRED)
 	find_package(GLM REQUIRED)
+	find_library(SDL2_image NAMES SDL2_image)
 	include_directories(${GLM_INCLUDE_DIRS})
 	include_directories(${SDL2_INCLUDE_DIRS})
+	include_directories(${SDL2_image_INCLUDE_DIRS})
 	include_directories(${PROJECT_SOURCE_DIR}/src)
 	add_executable(RT
 			src/main.cpp
@@ -61,10 +66,13 @@ function(setupLinux)
 			src/Ray/Ray.cpp
 			src/Objects/PointLight/PointLight.hpp
 			src/Objects/PointLight/PointLight.cpp
+			src/Common/Parser.hpp
+			src/Objects/ALight.hpp
+			src/Common/Utils.hpp
 			)
 
 	string(STRIP ${SDL2_LIBRARIES} SDL2_LIBRARIES)
-	target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES} pthread)
+	target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES} pthread ${SDL2_image})
 endfunction()
 
 if (WIN32)

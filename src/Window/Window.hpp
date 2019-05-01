@@ -12,7 +12,7 @@
 
 #include "Config/config.hpp"
 #include "Common/Intersection.hpp"
-#include "Debug/Debug.hpp"
+#include "Common/Debug.hpp"
 
 struct SDLWindowDeleter {
     inline void operator()(SDL_Window* window) {
@@ -23,6 +23,12 @@ struct SDLWindowDeleter {
 struct SDLRendererDeleter {
     inline void operator()(SDL_Renderer* renderer) {
         SDL_DestroyRenderer(renderer);
+    }
+};
+
+struct SDLTextureDeleter {
+    inline void operator()(SDL_Texture* texture) {
+        SDL_DestroyTexture(texture);
     }
 };
 
@@ -39,7 +45,17 @@ public:
 private:
 
     std::unique_ptr<SDL_Window, SDLWindowDeleter>       _window;
+public:
+    const std::unique_ptr<SDL_Window, SDLWindowDeleter> &getWindow() const;
+
+private:
     std::unique_ptr<SDL_Renderer, SDLRendererDeleter>   _renderer;
+    std::unique_ptr<SDL_Texture, SDLTextureDeleter>     _texture;
+public:
+    const std::unique_ptr<SDL_Texture, SDLTextureDeleter> &getTexture() const;
+
+public:
+    const std::unique_ptr<SDL_Renderer, SDLRendererDeleter> &getRenderer() const;
 
 private:
 

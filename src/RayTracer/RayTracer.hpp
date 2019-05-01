@@ -20,17 +20,35 @@
 #include "Scene/Scene.hpp"
 
 class   RayTracer {
-
 public:
     RayTracer();
     ~RayTracer();
 
+    static Scene   parse(const std::string &filename);
     void    run();
 
 private:
     Window			_window;
     EventHandler	_eventHandler;
 	Scene			_scene;
+	std::string     _filename;
+public:
+    const std::string &getFilename() const;
+
+    void setFilename(const std::string &filename);
+
+public:
+    const Window &getWindow() const;
+
+    const EventHandler &getEventHandler() const;
+
+    void setEventHandler(const EventHandler &eventHandler);
+
+    const Scene &getScene() const;
+
+    void setScene(const Scene &scene);
+
+    void renderLoop();
 };
 
 #endif //RT_RAYTRACER_HPP

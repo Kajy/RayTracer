@@ -9,20 +9,22 @@
 #include <cmath>
 #include "Config/config.hpp"
 #include "Objects/Camera/Camera.hpp"
-#include "Debug/Debug.hpp"
-#include <Objects/AShapeObject.hpp>
+#include "Common/Debug.hpp"
+#include <Objects/AHitable.hpp>
+#include <Objects/ALight.hpp>
 
 #ifdef _WIN32
 #include "glm/gtx/norm.hpp"
 #elif __APPLE__ or __linux__
-#include <glm/detail/type_vec.hpp>
     #include <glm/vec3.hpp>
+#include <Objects/ALight.hpp>
+
 #endif
 
-class PointLight : public AObject {
+class PointLight : public ALight {
 public:
     PointLight(double posX, double posY, double posZ);
-
+    PointLight(const glm::dvec3 &position);
     ~PointLight() = default;
 
 };

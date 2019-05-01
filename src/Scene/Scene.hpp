@@ -9,15 +9,15 @@
     #include "glm/gtx/norm.hpp"
 #elif __APPLE__ or __linux__
     #include <glm/glm.hpp>
-    #include <glm/detail/type_vec.hpp>
     #include <glm/vec3.hpp>
 #endif
 
 #include <vector>
+#include <Objects/ALight.hpp>
 
 #include "Config/config.hpp"
 #include "Common/Intersection.hpp"
-#include "Objects/AShapeObject.hpp"
+#include "Objects/AHitable.hpp"
 #include "Objects/Camera/Camera.hpp"
 #include "Objects/Sphere/Sphere.hpp"
 #include "Objects/PointLight/PointLight.hpp"
@@ -33,16 +33,28 @@ public:
 	Intersection            renderLightsEffect(Intersection const &inter);
 
 	Camera const                        &getView() const;
-    std::vector<AShapeObject *> const   &getShapeObjects() const;
+    std::vector<AHitable *> const       &getHitableObjects() const;
     double                              getFarestDistanceHited() const;
 
 private:
 	Camera	_view;
+public:
+    void setView(const Camera &view);
 
-	std::vector<AShapeObject *>     _shapeObjects;
-	std::vector<AObject *>          _lights;
+private:
+    std::vector<AHitable *>             _hitableObjects;
+    std::vector<ALight *>               _lights;
+public:
+    const std::vector<ALight *> &getLights() const;
 
-	double          _farestDistanceHited;
+    void setLights(const std::vector<ALight *> &lights);
+
+public:
+    void                                setHitableObjects(const std::vector<AHitable *> &shapeObjects);
+
+private:
+
+    double          _farestDistanceHited;
 
 };
 

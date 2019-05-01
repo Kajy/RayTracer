@@ -2,8 +2,8 @@
 // Created by Julian Vives on 2019-04-15.
 //
 
-#ifndef RT_ASHAPEOBJECT_HPP
-#define RT_ASHAPEOBJECT_HPP
+#ifndef RT_AHITABLE_HPP
+#define RT_AHITABLE_HPP
 
 #include <glm/gtx/norm.hpp>
 
@@ -11,14 +11,14 @@
 #include "Common/Intersection.hpp"
 #include "Common/Color.hpp"
 
-class AShapeObject : public AObject {
+class AHitable : public AObject {
 private:
-    AShapeObject() = default;
+    AHitable() = default;
 
 protected:
-    AShapeObject(const Color &color, const glm::dvec3 &position) : AShapeObject(0, 0, color, position) {}
+    AHitable(const Color &color, const glm::dvec3 &position) : AHitable(0, 0, color, position) {}
 
-    AShapeObject(double shining, double refractionIndex, const Color &color, const glm::dvec3 &position) :
+    AHitable(double shining, double refractionIndex, const Color &color, const glm::dvec3 &position) :
     AObject(position),
     _color(color),
     _shining(shining),
@@ -54,9 +54,12 @@ public:
         _color = color;
     }
 
-    virtual Intersection    calcCollision(glm::dvec3 view, glm::dvec3 vecDir) const = 0;
     virtual glm::dvec3      calcNormal(glm::dvec3 hitPoint) const = 0;
+
+    virtual Intersection hit(glm::dvec3 view, glm::dvec3 vecDir) const = 0;
+    virtual ~AHitable() = default;
+
 };
 
 
-#endif //RT_ASHAPEOBJECT_HPP
+#endif //RT_AHITABLE_HPP

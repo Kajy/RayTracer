@@ -11,15 +11,12 @@ Scene::Scene():
 	_view(-15.0, 0, 0),
 	_farestDistanceHited(0)
 {
-    _shapeObjects.push_back(new Sphere(0.0, 0.0, 0.0, 10, Color(255, 255, 255, 255)));
-    _shapeObjects.push_back(new Sphere(0.0, -10.0, 0.0, 5, Color(255, 0, 0, 255)));
-    _shapeObjects.push_back(new Sphere(0.0, 10.0, 0.0, 5, Color(0, 255, 0, 255)));
-
-    _lights.push_back(new PointLight(-15.0, 5.0, -5.0));
+	//_lights.push_back(new PointLight(-15.0, 5.0, -5.0));
 }
 
 Scene::~Scene()
 {
+    _hitableObjects.clear();
 }
 
 Intersection		    Scene::renderScene(double x, double y, uint32_t maxWidth, uint32_t maxHeight) {
@@ -32,7 +29,7 @@ Intersection		    Scene::renderScene(double x, double y, uint32_t maxWidth, uint
 	// RENDER PIPELINE
 
 	// --- SIMPLE HIT
-    intersection = ray.launchRay(this->_shapeObjects);
+    intersection = ray.launchRay(this->_hitableObjects);
 
     // --- LIGHTS EFFECTS
     if (intersection.isHit)
@@ -48,11 +45,14 @@ Intersection		    Scene::renderScene(double x, double y, uint32_t maxWidth, uint
 Intersection            Scene::renderLightsEffect(Intersection const &inter) {
 
     Intersection    inLight(inter);
+	double			dotAvg = 0;
 
     for (auto const &it: _lights) {
         glm::dvec3  dir(glm::normalize(it->getPosition() - inter.hitPosition));
-        inLight.color = inLight.color * glm::dot(inLight.normal, dir);
+		dotAvg += glm::dot(inLight.normal, dir);
     }
+
+	inLight.color = inLight.color * (dotAvg / _lights.size());
 
     return inLight;
 }
@@ -61,10 +61,26 @@ Camera const    &Scene::getView() const {
     return _view;
 }
 
-std::vector<AShapeObject *> const &Scene::getShapeObjects() const {
-    return _shapeObjects;
+std::vector<AHitable *> const &Scene::getHitableObjects() const {
+    return _hitableObjects;
 }
 
 double          Scene::getFarestDistanceHited() const {
     return _farestDistanceHited;
+}
+
+void Scene::setView(const Camera &view) {
+    _view = view;
+}
+
+void            Scene::setHitableObjects(const std::vector<AHitable *> &objects) {
+    _hitableObjects = objects;
+}
+
+const std::vector<ALight *> &Scene::getLights() const {
+    return _lights;
+}
+
+void Scene::setLights(const std::vector<ALight *> &lights) {
+    _lights = lights;
 }

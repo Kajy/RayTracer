@@ -9,26 +9,27 @@
 #include <cmath>
 #include "Config/config.hpp"
 #include "Objects/Camera/Camera.hpp"
-#include "Debug/Debug.hpp"
-#include <Objects/AShapeObject.hpp>
+#include "Common/Debug.hpp"
+#include <Objects/AHitable.hpp>
 
 #ifdef _WIN32
     #include "glm/gtx/norm.hpp"
 #elif __APPLE__ or __linux__
-    #include <glm/detail/type_vec.hpp>
     #include <glm/vec3.hpp>
 #endif
 
-class Sphere : public AShapeObject
+class Sphere : public AHitable
 {
 public:
 	Sphere();
 	Sphere(double posX, double posY, double posZ, double radius, Color color);
-	~Sphere();
+	~Sphere() = default;
 
-	Intersection		calcCollision(glm::dvec3 view, glm::dvec3 vecDir) const override;
 	glm::dvec3          calcNormal(glm::dvec3 hitPoint) const override;
 
+
+
+	Intersection		hit(glm::dvec3 view, glm::dvec3 vecDir) const override;
 private:
 	double		_radius;
 public:
