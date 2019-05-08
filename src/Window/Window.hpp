@@ -40,7 +40,6 @@ public:
 
     void    drawPixel(Intersection inter, uint32_t x, uint32_t y) const;
     void    render() const;
-    void    generateDistanceMap(double maxDist);
 
 private:
 
@@ -65,7 +64,6 @@ private:
     int             _drawableSurfaceHeight;
 
     Intersection    *_image;
-    Intersection    *_distanceMap;
 
 public:
     int getDrawableSurfaceWidth() const;

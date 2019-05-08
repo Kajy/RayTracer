@@ -20,6 +20,7 @@
 #include "Objects/AHitable.hpp"
 #include "Objects/Camera/Camera.hpp"
 #include "Objects/Sphere/Sphere.hpp"
+#include "Objects/Triangle/Triangle.hpp"
 #include "Objects/PointLight/PointLight.hpp"
 #include "Ray/Ray.hpp"
 
@@ -31,10 +32,10 @@ public:
 
 	Intersection	        renderScene(double x, double y, uint32_t maxWidth, uint32_t maxHeight);
 	Intersection            renderLightsEffect(Intersection const &inter);
+	Intersection            renderShadowsEffect(Intersection const &inter);
 
 	Camera const                        &getView() const;
     std::vector<AHitable *> const       &getHitableObjects() const;
-    double                              getFarestDistanceHited() const;
 
 private:
 	Camera	_view;
@@ -51,11 +52,7 @@ public:
 
 public:
     void                                setHitableObjects(const std::vector<AHitable *> &shapeObjects);
-
-private:
-
-    double          _farestDistanceHited;
-
+	void								setHitableObject(AHitable *shapeObject);
 };
 
 #endif //RT_SCENE_HPP

@@ -25,6 +25,10 @@ RayTracer::~RayTracer()
 
 void    RayTracer::renderLoop()
 {
+	this->_scene.setHitableObject(new Triangle(glm::dvec3(-10, 10, -5), glm::dvec3(-10, -10, -5), glm::dvec3(10, -10, -5)));
+	this->_scene.setHitableObject(new Triangle(glm::dvec3(10, 10, -5), glm::dvec3(-10, 10, -5), glm::dvec3(10, -10, -5)));
+
+	this->_scene.setHitableObject(new Triangle(glm::dvec3(-10, -10, -5), glm::dvec3(-10, -10, 5), glm::dvec3(10, -10, -5)));
 
     uint32_t width = _window.getDrawableSurfaceWidth();
     uint32_t height = _window.getDrawableSurfaceHeight();
@@ -54,7 +58,6 @@ void    RayTracer::renderLoop()
               << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()
               << " ms" << std::endl;
 
-    this->_window.generateDistanceMap(this->_scene.getFarestDistanceHited());
     this->_window.render();
 }
 

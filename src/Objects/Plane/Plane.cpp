@@ -25,6 +25,7 @@ Intersection        Plane::hit(const glm::dvec3 &view, const glm::dvec3 &vecDir)
     return hit;
 }
 
+
 double Plane::getHeight() const {
     return _height;
 }

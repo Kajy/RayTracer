@@ -5,7 +5,7 @@
 #include <Common/Intersection.hpp>
 #include "Sphere.hpp"
 
-
+	
 Sphere::Sphere(): Sphere(0.0, 0.0, 0.0, 10, Color(255, 255, 255, 255))
 {
 }
@@ -40,6 +40,7 @@ Intersection		Sphere::hit(const glm::dvec3 &view, const glm::dvec3 &vecDir) cons
 		hit.hitPosition = view + vecDir * finalDist;
 		hit.color = _color;
 		hit.isHit = true;
+		hit.normal = calcNormal(hit.hitPosition);
 	}
 	return (hit);
 }
