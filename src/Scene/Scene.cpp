@@ -57,7 +57,7 @@ Intersection            Scene::renderShadowsEffect(Intersection const &inter) {
 			--shadowCount;
     }
 
-	inShadow.color = inShadow.color * (shadowCount / _lights.size());
+	inShadow.color = inShadow.color * (shadowCount / (float)_lights.size());
 
     return inShadow;
 }
