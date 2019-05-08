@@ -53,7 +53,7 @@ Intersection            Scene::renderShadowsEffect(Intersection const &inter) {
 		Intersection toLight = ray.launchRay(this->_hitableObjects);
 		double distanceWithLight = glm::length2(dirToLight);
 		//std::cout << toLight.distanceWithViewer << std::endl;
-		if (toLight.distanceWithViewer < distanceWithLight && toLight.distanceWithViewer > 0.00000000001)
+		if (toLight.isHit && toLight.distanceWithViewer > 0.01)
 			--shadowCount;
     }
 

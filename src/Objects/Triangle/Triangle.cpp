@@ -6,9 +6,9 @@
 
 Triangle::Triangle(glm::dvec3 const &A, glm::dvec3 const &B, glm::dvec3 const &C) :
 	AHitable(Color(255, 255, 255, 0), glm::dvec3(0, 0, 0)),
-	_A(A),
-	_B(B),
-	_C(C)
+	_A(A, glm::dvec3(0.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, 0.0)),
+	_B(B, glm::dvec3(0.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, 0.0)),
+	_C(C, glm::dvec3(0.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, 0.0))
 {
 }
 
@@ -18,14 +18,14 @@ Intersection		Triangle::hit(const glm::dvec3 &view, const glm::dvec3 &vecDir) co
 	glm::dvec3 normale = calcNormal(view);
 	Intersection	newInter;
 
-	double t = glm::dot(_C - view, normale) / glm::dot(vecDir, normale);
+	double t = glm::dot(std::get<0>(_C) - view, normale) / glm::dot(vecDir, normale);
 	if (t < 0)
 		return newInter;
 	glm::dvec3 P = view + t * vecDir;
 
-	glm::dvec3 u = _B - _A;
-	glm::dvec3 v = _C - _A;
-	glm::dvec3 w = P - _A;
+	glm::dvec3 u = std::get<0>(_B) - std::get<0>(_A);
+	glm::dvec3 v = std::get<0>(_C) - std::get<0>(_A);
+	glm::dvec3 w = P - std::get<0>(_A);
 
 	double m11 = glm::length2(u);
 	double m12 = glm::dot(u, v);
@@ -55,8 +55,10 @@ Intersection		Triangle::hit(const glm::dvec3 &view, const glm::dvec3 &vecDir) co
 	newInter.hitPosition = P;
 	newInter.normal = normale;
 	newInter.distanceWithViewer = t;
+
+	return newInter;
 }
 
 glm::dvec3			Triangle::calcNormal(glm::dvec3 const &null) const {
-	return glm::normalize(glm::cross(_B - _A, _C - _A));
+	return glm::normalize(glm::cross(std::get<0>(_B) - std::get<0>(_A), std::get<0>(_C) - std::get<0>(_A)));
 }
