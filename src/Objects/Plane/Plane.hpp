@@ -13,6 +13,7 @@ public:
     Plane();
     Intersection		hit(const glm::dvec3 &view, const glm::dvec3 &vecDir) const override;
     glm::dvec3          calcNormal(const glm::dvec3 &hitPoint) const override ;
+
     ~Plane() = default;
 
 private:
@@ -21,7 +22,7 @@ private:
 public:
     double getHeight() const;
 
-    void setHeight(double height);
+    void	setHeight(double height);
 };
 
 

@@ -8,10 +8,8 @@
 
 
 Scene::Scene():
-	_view(-15.0, 0, 0),
-	_farestDistanceHited(0)
+	_view(-15.0, 0, 0)
 {
-	//_lights.push_back(new PointLight(-15.0, 5.0, -5.0));
 }
 
 Scene::~Scene()
@@ -31,30 +29,52 @@ Intersection		    Scene::renderScene(double x, double y, uint32_t maxWidth, uint
 	// --- SIMPLE HIT
     intersection = ray.launchRay(this->_hitableObjects);
 
-    // --- LIGHTS EFFECTS
-    if (intersection.isHit)
-        intersection = renderLightsEffect(intersection);
+	if (intersection.isHit) {
 
-	if (intersection.distanceWithViewer < MAX_DISTANCE) // Used to calculate distanceMap
-	    _farestDistanceHited = glm::max(_farestDistanceHited, intersection.distanceWithViewer);
+		// --- LIGHTS EFFECTS
+		intersection = renderLightsEffect(intersection);
 
+		// --- SHADOW EFFECTS
+		//intersection = renderShadowsEffect(intersection);
+	}
 
 	return intersection;
 }
 
-Intersection            Scene::renderLightsEffect(Intersection const &inter) {
+Intersection            Scene::renderShadowsEffect(Intersection const &inter) {
 
-    Intersection    inLight(inter);
+    Intersection    inShadow(inter);
 	double			dotAvg = 0;
+	uint32_t		shadowCount = _lights.size();
 
     for (auto const &it: _lights) {
-        glm::dvec3  dir(glm::normalize(it->getPosition() - inter.hitPosition));
-		dotAvg += glm::dot(inLight.normal, dir);
+		glm::dvec3	dirToLight = glm::normalize(it->getPosition() - inter.hitPosition);
+		Ray ray(inter.hitPosition, dirToLight);
+		Intersection toLight = ray.launchRay(this->_hitableObjects);
+		double distanceWithLight = glm::length2(dirToLight);
+		//std::cout << toLight.distanceWithViewer << std::endl;
+		if (toLight.isHit && toLight.distanceWithViewer > 0.01)
+			--shadowCount;
     }
+
+	inShadow.color = inShadow.color * (shadowCount / (float)_lights.size());
+
+    return inShadow;
+}
+
+Intersection            Scene::renderLightsEffect(Intersection const &inter) {
+
+	Intersection    inLight(inter);
+	double			dotAvg = 0;
+
+	for (auto const &it : _lights) {
+		glm::dvec3  dir(glm::normalize(it->getPosition() - inter.hitPosition));
+		dotAvg += glm::dot(inLight.normal, dir);
+	}
 
 	inLight.color = inLight.color * (dotAvg / _lights.size());
 
-    return inLight;
+	return inLight;
 }
 
 Camera const    &Scene::getView() const {
@@ -65,16 +85,16 @@ std::vector<AHitable *> const &Scene::getHitableObjects() const {
     return _hitableObjects;
 }
 
-double          Scene::getFarestDistanceHited() const {
-    return _farestDistanceHited;
-}
-
 void Scene::setView(const Camera &view) {
     _view = view;
 }
 
 void            Scene::setHitableObjects(const std::vector<AHitable *> &objects) {
     _hitableObjects = objects;
+}
+
+void			Scene::setHitableObject(AHitable *object) {
+	_hitableObjects.push_back(object);
 }
 
 const std::vector<ALight *> &Scene::getLights() const {

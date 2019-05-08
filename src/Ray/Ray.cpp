@@ -36,7 +36,6 @@ Intersection      Ray::searchClosestHit(std::vector<AHitable *> const &shapeObje
         Intersection newHit = it->hit(_origin, _dir);
         if (newHit.distanceWithViewer < hit.distanceWithViewer) {
             hit = newHit;
-            hit.normal = it->calcNormal(glm::dvec3(_origin + _dir * hit.distanceWithViewer));
         }
     }
 

@@ -27,7 +27,6 @@ Window::Window(int w, int h):
     SDL_GL_GetDrawableSize(_window.get(), &_drawableSurfaceWidth, &_drawableSurfaceHeight);
 
     _image = new Intersection[_drawableSurfaceHeight * _drawableSurfaceWidth];
-    _distanceMap = new Intersection[_drawableSurfaceHeight * _drawableSurfaceWidth];
 
     if ((_renderer = std::unique_ptr<SDL_Renderer, SDLRendererDeleter>(SDL_CreateRenderer(_window.get(), -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE))) == nullptr) {
         Debug::printError("Error when creating renderer");
@@ -86,18 +85,6 @@ void        Window::render() const
 
     savePNG(texture, pixels, _drawableSurfaceWidth, _drawableSurfaceHeight);
     SDL_DestroyTexture(texture);
-}
-
-void        Window::generateDistanceMap(double maxDist) {
-    std::cout << "Max distance : " << maxDist << std::endl;
-    for (uint32_t x = 0; x < _drawableSurfaceWidth; ++x) {
-        for (uint32_t y = 0; y < _drawableSurfaceHeight; ++y) {
-            double hitDist = glm::min(_image[y * _drawableSurfaceWidth + x].distanceWithViewer, maxDist);
-            _distanceMap[y * _drawableSurfaceWidth + x].color.red = (unsigned char)((hitDist / maxDist) * 255);
-            _distanceMap[y * _drawableSurfaceWidth + x].color.green = (unsigned char)((hitDist / maxDist) * 255);
-            _distanceMap[y * _drawableSurfaceWidth + x].color.blue = (unsigned char)((hitDist / maxDist) * 255);
-        }
-    }
 }
 
 int         Window::getDrawableSurfaceWidth() const {
