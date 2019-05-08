@@ -214,7 +214,7 @@ private:
 #ifdef _WIN32
         char temp[255];
         return (_getcwd(temp, sizeof(temp)) ? std::string( temp ) : std::string("") );
-#elif
+#else
 		char temp[MAXPATHLEN];
 		return (getcwd(temp, sizeof(temp)) ? std::string(temp) : std::string(""));
 #endif

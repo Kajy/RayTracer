@@ -25,11 +25,6 @@ RayTracer::~RayTracer()
 
 void    RayTracer::renderLoop()
 {
-	/*this->_scene.setHitableObject(new Triangle(glm::dvec3(-10, 10, -5), glm::dvec3(-10, -10, -5), glm::dvec3(10, -10, -5)));
-	this->_scene.setHitableObject(new Triangle(glm::dvec3(10, 10, -5), glm::dvec3(-10, 10, -5), glm::dvec3(10, -10, -5)));
-
-	this->_scene.setHitableObject(new Triangle(glm::dvec3(-10, -10, -5), glm::dvec3(-10, -10, 5), glm::dvec3(10, -10, -5)));
-*/
     uint32_t width = _window.getDrawableSurfaceWidth();
     uint32_t height = _window.getDrawableSurfaceHeight();
     std::size_t max = width * height;
@@ -47,9 +42,11 @@ void    RayTracer::renderLoop()
         }));
     }
 
-    for (uint32_t i = 0; i < cores; ++i)
+    for (uint32_t i = 0; i < cores; ++i) {
+        std::cout << (float)i/cores * 100 << "%" << std::endl;
         future_vector[i].wait();
-
+    }
+    std::cout << "100%" << std::endl;
     auto end = std::chrono::steady_clock::now();
     std::cout << "Elapsed time in microseconds : "
               << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()
