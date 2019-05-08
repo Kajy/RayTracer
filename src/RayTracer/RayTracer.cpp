@@ -25,11 +25,11 @@ RayTracer::~RayTracer()
 
 void    RayTracer::renderLoop()
 {
-	this->_scene.setHitableObject(new Triangle(glm::dvec3(-10, 10, -5), glm::dvec3(-10, -10, -5), glm::dvec3(10, -10, -5)));
+	/*this->_scene.setHitableObject(new Triangle(glm::dvec3(-10, 10, -5), glm::dvec3(-10, -10, -5), glm::dvec3(10, -10, -5)));
 	this->_scene.setHitableObject(new Triangle(glm::dvec3(10, 10, -5), glm::dvec3(-10, 10, -5), glm::dvec3(10, -10, -5)));
 
 	this->_scene.setHitableObject(new Triangle(glm::dvec3(-10, -10, -5), glm::dvec3(-10, -10, 5), glm::dvec3(10, -10, -5)));
-
+*/
     uint32_t width = _window.getDrawableSurfaceWidth();
     uint32_t height = _window.getDrawableSurfaceHeight();
     std::size_t max = width * height;
@@ -112,6 +112,11 @@ static void parseObjects(Scene &scene, const json &jsonFile) {
                 Plane *plane = Parser::ParsePlane(object);
                 objectsParsed.push_back(plane);
                 Debug::printPosition(plane, "plane");
+                break;
+            }
+            case Utils::str2int("polygon"): {
+                std::vector<Triangle *> triangles = Parser::ParseObj(object);
+                objectsParsed.insert(std::end(objectsParsed), std::begin(triangles), std::end(triangles));
                 break;
             }
         }
