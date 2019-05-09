@@ -10,7 +10,7 @@
 #define WINDOW_H 720
 #define MAX_DISTANCE 50
 
-#define	FOV	250
+#define	FOV	360
 
 #define ANTI_ALIASING 1
 

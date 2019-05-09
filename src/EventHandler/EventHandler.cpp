@@ -27,7 +27,8 @@ bool                EventHandler::mayClose() const
 
 void                EventHandler::manageWindowEvent()
 {
-    if (_eventHandler.window.event == SDL_WINDOWEVENT_CLOSE)
+    if (_eventHandler.window.event == SDL_WINDOWEVENT_CLOSE ||
+            (_eventHandler.type == SDL_KEYDOWN && _eventHandler.key.keysym.sym == SDLK_ESCAPE))
         _closeWindow = true;
 }
 
