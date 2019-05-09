@@ -1,33 +1,18 @@
 {
   "camera": {
     "position": {
-      "x": -2.0,
-      "y": 0,
-      "z": 1
+      "x": -3,
+      "y": 1,
+      "z": 2
     }
   },
   "lights": [
     {
       "type": "point",
       "position": {
-        "x": -15.0,
-        "y": 5.0,
-        "z": -5.0
-      },
-      "color": {
-        "red": 123,
-        "green": 122,
-        "blue": 23,
-        "alpha": 0
-      },
-      "intensity": 100
-    },
-    {
-      "type": "point",
-      "position": {
-        "x": -15.0,
-        "y": -5.0,
-        "z": -5.0
+        "x": -45.0,
+        "y": 380.0,
+        "z": 105.0
       },
       "color": {
         "red": 123,

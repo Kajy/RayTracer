@@ -40,22 +40,21 @@ Window::~Window() {
 }
 
 
-void        Window::drawPixel(Intersection inter, uint32_t x, uint32_t y) const
+void        Window::drawPixel(Color finalColor, uint32_t x, uint32_t y) const
 {
-    _image[y * _drawableSurfaceWidth + x].color.red = inter.color.red;
-    _image[y * _drawableSurfaceWidth + x].color.green = inter.color.green;
-    _image[y * _drawableSurfaceWidth + x].color.blue = inter.color.blue;
+    _image[y * _drawableSurfaceWidth + x].color.red = finalColor.red;
+    _image[y * _drawableSurfaceWidth + x].color.green = finalColor.green;
+    _image[y * _drawableSurfaceWidth + x].color.blue = finalColor.blue;
     _image[y * _drawableSurfaceWidth + x].color.alpha = 255;
-    _image[y * _drawableSurfaceWidth + x].distanceWithViewer = inter.distanceWithViewer;
 }
 
 static void savePNG(SDL_Texture *texture, uint32_t *pixels, uint32_t w, uint32_t h)
 {
-    Uint32 format_pixels;
-    SDL_QueryTexture(texture, &format_pixels, NULL, NULL, NULL);
-    SDL_Surface *surface = SDL_CreateRGBSurfaceWithFormatFrom(pixels, w, h, 32, w * sizeof(Uint32), format_pixels);
-    IMG_SavePNG(surface, "scene.png");
-    SDL_FreeSurface(surface);
+  // Uint32 format_pixels;
+    //  SDL_QueryTexture(texture, &format_pixels, NULL, NULL, NULL);
+  // SDL_Surface *surface = SDL_CreateRGBSurfaceWithFormatFrom(pixels, w, h, 32, w * sizeof(Uint32), format_pixels);
+  //  IMG_SavePNG(surface, "scene.png");
+  //  SDL_FreeSurface(surface);
 }
 
 void        Window::render() const

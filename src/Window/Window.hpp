@@ -38,7 +38,7 @@ public:
     Window(int w, int h);
     ~Window();
 
-    void    drawPixel(Intersection inter, uint32_t x, uint32_t y) const;
+    void    drawPixel(Color color, uint32_t x, uint32_t y) const;
     void    render() const;
 
 private:
