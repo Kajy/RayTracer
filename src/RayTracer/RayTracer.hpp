@@ -32,6 +32,9 @@ private:
     EventHandler	_eventHandler;
 	Scene			_scene;
 	std::string     _filename;
+
+	uint32_t        _antiAliasing;
+
 public:
     const std::string &getFilename() const;
 
@@ -47,6 +50,8 @@ public:
     const Scene &getScene() const;
 
     void setScene(const Scene &scene);
+
+    void setAntiAliasing(uint32_t aa);
 
     void renderLoop();
 };

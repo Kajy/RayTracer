@@ -47,7 +47,7 @@ Color		    Scene::renderScene(double x, double y, uint32_t maxWidth, uint32_t ma
             }
         }
     }
-	return Color((unsigned char)(finalRGB.r / ANTI_ALIASING), (unsigned char)(finalRGB.g / ANTI_ALIASING), (unsigned char)(finalRGB.b / ANTI_ALIASING), 255);
+	return Color((unsigned char)(finalRGB.r / (ANTI_ALIASING * ANTI_ALIASING)), (unsigned char)(finalRGB.g / (ANTI_ALIASING * ANTI_ALIASING)), (unsigned char)(finalRGB.b / (ANTI_ALIASING * ANTI_ALIASING)), 255);
 }
 
 Intersection            Scene::renderShadowsEffect(Intersection const &inter) {

@@ -13,7 +13,8 @@
 using namespace nlohmann;
 
 RayTracer::RayTracer():
-    _window(WINDOW_W, WINDOW_H)
+    _window(WINDOW_W, WINDOW_H),
+    _antiAliasing(1)
 {
     Debug::printInfo("Welcome on the RayTracer of KJ.");
 }
@@ -85,6 +86,10 @@ const Scene &RayTracer::getScene() const {
 
 void RayTracer::setScene(const Scene &scene) {
     _scene = scene;
+}
+
+void RayTracer::setAntiAliasing(uint32_t aa) {
+    _antiAliasing = aa;
 }
 
 static void parseCamera(Scene &scene, const json &json) {
