@@ -35,7 +35,9 @@ public:
 private:
 
 	std::tuple<glm::dvec3, glm::dvec3, glm::dvec2>	_A, _B, _C;
+    glm::dvec3      _normal, _u, _v;
 
+    double          _m11, _m12, _m22, _deterM;
 };
 
 #endif //RT_TRIANGLE_HPP
