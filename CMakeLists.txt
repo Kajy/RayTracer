@@ -11,6 +11,7 @@ macro(print_all_variables)
 endmacro()
 
 set(CMAKE_CXX_STANDARD 17)
+SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -O2")
 
 function(setupWindows)
 	set(CMAKE_MODULE_PATH "C:/Program Files/CMake/modules")

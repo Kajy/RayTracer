@@ -153,9 +153,11 @@ public:
                         std::getline( ref, vStr, '/' );
                         std::getline( ref, vtStr, '/' );
                         std::getline( ref, vnStr, '/' );
-                        int v = atoi( vStr.c_str() );
-                        int vt = atoi( vtStr.c_str() );
-                        int vn = atoi( vnStr.c_str() );
+
+                        int v = vStr.empty() ? 0 : atoi( vStr.c_str() ) - 1;
+                        int vt = vtStr.empty() ? 0 : atoi( vtStr.c_str() ) - 1;
+                        int vn = vnStr.empty() ? 0 : atoi( vnStr.c_str() ) - 1;
+
                         v  = (  v >= 0 ?  v : valuesVertices.size() +  v );
                         vt = ( vt >= 0 ? vt : valuesTextures.size() + vt );
                         vn = ( vn >= 0 ? vn : valuesNormal.size()   + vn );
@@ -168,21 +170,21 @@ public:
                         const VertRef* p[3] = { &refs[0], &refs[i], &refs[i+1] };
 
                         // http://www.opengl.org/wiki/Calculating_a_Surface_Normal
-                        glm::dvec3 U( valuesVertices[ p[1]->v - 1 ] - valuesVertices[ p[0]->v - 1 ] );
-                        glm::dvec3 V( valuesVertices[ p[2]->v - 1] - valuesVertices[ p[0]->v - 1] );
+                        glm::dvec3 U( valuesVertices[ p[1]->v ] - valuesVertices[ p[0]->v ] );
+                        glm::dvec3 V( valuesVertices[ p[2]->v ] - valuesVertices[ p[0]->v ] );
                         glm::dvec3 faceNormal = glm::normalize( glm::cross( U, V ) );
 
                         std::vector<std::tuple<glm::dvec3, glm::dvec3, glm::dvec3>> mapping;
-
                         for( size_t j = 0; j < 3; ++j )
                         {
                             mapping.emplace_back(
-                                    glm::vec3( valuesVertices[ p[j]->v - 1] ),
-                                    glm::dvec3(valuesTextures[ p[j]->vt - 1]),
-                                    p[j]->vn - 1 != 0 ? valuesNormal[ p[j]->vn - 1] : faceNormal);
+                                    p[j]->v >= valuesVertices.size() ? glm::dvec3(0, 0, 0) : glm::dvec3( valuesVertices[ p[j]->v ] ),
+                                    p[j]->vt >= valuesTextures.size() ? glm::dvec3(0, 0, 0) : glm::dvec3(valuesTextures[ p[j]->vt ]),
+                                    p[j]->vn != 0 ? valuesNormal[ p[j]->vn ] : faceNormal);
                         }
                         Triangle *triangle = ParseHitableObject<Triangle>(json);
                         triangle->setVertices(mapping[0], mapping[1], mapping[2]);
+
                         triangles.emplace_back(triangle);
 
 #if _DEBUG

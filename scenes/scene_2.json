@@ -1,18 +1,18 @@
 {
   "camera": {
     "position": {
-      "x": -3,
-      "y": 1,
-      "z": 2
+      "x": -47,
+      "y": 385,
+      "z": 115
     }
   },
   "lights": [
     {
       "type": "point",
       "position": {
-        "x": -15.0,
-        "y": 15.0,
-        "z": 10.0
+        "x": -45.0,
+        "y": 380.0,
+        "z": 105.0
       },
       "color": {
         "red": 123,
@@ -23,7 +23,6 @@
       "intensity": 100
     }
   ],
-
   "objects": [
     {
       "type": "polygon",
@@ -40,7 +39,7 @@
         "blue": 0,
         "alpha": 255
       },
-      "path": "obj/cube.obj"
+      "path": "obj/cat.obj"
     }
   ]
 }
