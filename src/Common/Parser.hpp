@@ -97,7 +97,7 @@ public:
         std::string     filename(j.at("path").get<std::string>());
         std::ifstream   file(getWorkingPath() + "/scenes/" + filename);
         std::vector<glm::dvec3> valuesVertices;
-        std::vector<glm::dvec3> valuesTextures;
+        std::vector<glm::dvec2> valuesTextures;
         std::vector<glm::dvec3> valuesNormal;
         std::vector<Triangle *> triangles;
 
@@ -123,7 +123,7 @@ public:
 					}
 					case OBJ_VALUES_TOKENS::TEXTURES_TOKEN: {
 						auto textures = parseValues(file, 2, currentLine, currentColumn, filename);
-						valuesTextures.push_back(textures);
+						valuesTextures.push_back(glm::dvec2(textures.x, textures.y));
 						break;
 					}
 					case OBJ_VALUES_TOKENS::NORMAL_TOKEN: {
@@ -143,13 +143,14 @@ public:
 				}
 				else if (peek == LINK_VALUES_TOKENS::LINK_BEGIN_TOKEN && currentColumn == 1) {
 					std::string nb;
-					std::vector<std::tuple<glm::dvec3, glm::dvec3, glm::dvec3>> mapping;
+					std::vector<std::tuple<glm::dvec3, glm::dvec3, glm::dvec2>> mapping;
 					// 1 face = 1 triangle = 3 points
 					peek = file.get();
 					currentColumn++;
 					for (int i = 0; i < 3; i++) {
 						// v/vt/vn
-						glm::dvec3 vertex, texture, normal;
+						glm::dvec3 vertex, normal;
+						glm::dvec2 texture;
 						for (int i1 = 0; i1 < 3; i1++) {
 							int idx;
 							nb.clear();
@@ -182,7 +183,7 @@ public:
 								++currentColumn;
 							}
 						}
-						mapping.emplace_back(vertex, texture, normal);
+						mapping.emplace_back(vertex, normal, texture);
 					}
 					Triangle *triangle = ParseHitableObject<Triangle>(j);
 					triangle->setVertices(mapping[0], mapping[1], mapping[2]);

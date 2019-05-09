@@ -17,28 +17,37 @@ Scene::~Scene()
     _hitableObjects.clear();
 }
 
-Intersection		    Scene::renderScene(double x, double y, uint32_t maxWidth, uint32_t maxHeight) {
+Color		    Scene::renderScene(double x, double y, uint32_t maxWidth, uint32_t maxHeight) {
 
-    Intersection intersection;
+    glm::dvec3  finalRGB;
     glm::dvec3	_posView = _view.getPosition();
 
-	Ray ray(_posView, glm::normalize(glm::dvec3(FOV - _posView.x, (maxWidth / 2.0) - x - _posView.y, (maxHeight / 2.0) - y - _posView.z)));
+    for (uint32_t aa_x = 0; aa_x < ANTI_ALIASING; ++aa_x) {
+        for (uint32_t aa_y = 0; aa_y < ANTI_ALIASING; ++aa_y) {
+            Ray ray(_posView, glm::normalize(
+                    glm::dvec3(FOV - _posView.x, (maxWidth / 2.0) - (x + ((float)aa_x / ANTI_ALIASING)) - _posView.y,
+                               (maxHeight / 2.0) - y + ((float)aa_y / ANTI_ALIASING) - _posView.z)));
 
-	// RENDER PIPELINE
+            // RENDER PIPELINE
 
-	// --- SIMPLE HIT
-    intersection = ray.launchRay(this->_hitableObjects);
+            // --- SIMPLE HIT
+            Intersection intersection = ray.launchRay(this->_hitableObjects);
 
-	if (intersection.isHit) {
+            if (intersection.isHit) {
 
-		// --- LIGHTS EFFECTS
-		intersection = renderLightsEffect(intersection);
+                // --- LIGHTS EFFECTS
+                intersection = renderLightsEffect(intersection);
 
-		// --- SHADOW EFFECTS
-		//intersection = renderShadowsEffect(intersection);
-	}
+                // --- SHADOW EFFECTS
+                //intersection = renderShadowsEffect(intersection);
 
-	return intersection;
+                finalRGB.r += intersection.color.red;
+                finalRGB.g += intersection.color.green;
+                finalRGB.b += intersection.color.blue;
+            }
+        }
+    }
+	return Color((unsigned char)(finalRGB.r / ANTI_ALIASING), (unsigned char)(finalRGB.g / ANTI_ALIASING), (unsigned char)(finalRGB.b / ANTI_ALIASING), 255);
 }
 
 Intersection            Scene::renderShadowsEffect(Intersection const &inter) {

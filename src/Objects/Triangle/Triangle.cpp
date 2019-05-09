@@ -6,9 +6,9 @@
 
 Triangle::Triangle(glm::dvec3 const &A, glm::dvec3 const &B, glm::dvec3 const &C) :
 	AHitable(Color(255, 255, 255, 0), glm::dvec3(0, 0, 0)),
-	_A(A, glm::dvec3(0.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, 0.0)),
-	_B(B, glm::dvec3(0.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, 0.0)),
-	_C(C, glm::dvec3(0.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, 0.0))
+	_A(A, glm::dvec3(0.0, 0.0, 0.0), glm::dvec2(0.0, 0.0)),
+	_B(B, glm::dvec3(0.0, 0.0, 0.0), glm::dvec2(0.0, 0.0)),
+	_C(C, glm::dvec3(0.0, 0.0, 0.0), glm::dvec2(0.0, 0.0))
 {
 }
 
@@ -63,9 +63,9 @@ glm::dvec3			Triangle::calcNormal(glm::dvec3 const &null) const {
 	return glm::normalize(glm::cross(std::get<0>(_B) - std::get<0>(_A), std::get<0>(_C) - std::get<0>(_A)));
 }
 
-void                Triangle::setVertices(const std::tuple<glm::dvec3, glm::dvec3, glm::dvec3> &A,
-                                          const std::tuple<glm::dvec3, glm::dvec3, glm::dvec3> &B,
-                                          const std::tuple<glm::dvec3, glm::dvec3, glm::dvec3> &C) {
+void                Triangle::setVertices(const std::tuple<glm::dvec3, glm::dvec3, glm::dvec2> &A,
+                                          const std::tuple<glm::dvec3, glm::dvec3, glm::dvec2> &B,
+                                          const std::tuple<glm::dvec3, glm::dvec3, glm::dvec2> &C) {
     _A = A;
     _B = B;
     _C = C;
