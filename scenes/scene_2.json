@@ -1,9 +1,9 @@
 {
   "camera": {
     "position": {
-      "x": -15,
-      "y": 0,
-      "z": 0
+      "x": -3,
+      "y": 1,
+      "z": 2
     }
   },
   "lights": [
@@ -26,22 +26,21 @@
 
   "objects": [
     {
-      "type": "sphere",
+      "type": "polygon",
       "position": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 10,
+        "y": 10,
+        "z": 10
       },
-      "radius": 5,
       "refractionIndex": 0,
       "shining": 0,
-
       "color": {
         "red": 0,
         "green": 255,
         "blue": 0,
         "alpha": 255
-      }
-    } 
+      },
+      "path": "obj/cube.obj"
+    }
   ]
 }

@@ -62,3 +62,14 @@ Intersection		Triangle::hit(const glm::dvec3 &view, const glm::dvec3 &vecDir) co
 glm::dvec3			Triangle::calcNormal(glm::dvec3 const &null) const {
 	return glm::normalize(glm::cross(std::get<0>(_B) - std::get<0>(_A), std::get<0>(_C) - std::get<0>(_A)));
 }
+
+void                Triangle::setVertices(const std::tuple<glm::dvec3, glm::dvec3, glm::dvec3> &A,
+                                          const std::tuple<glm::dvec3, glm::dvec3, glm::dvec3> &B,
+                                          const std::tuple<glm::dvec3, glm::dvec3, glm::dvec3> &C) {
+    _A = A;
+    _B = B;
+    _C = C;
+}
+
+Triangle::Triangle() : Triangle(glm::dvec3(0), glm::dvec3(0), glm::dvec3(0)) {
+}
