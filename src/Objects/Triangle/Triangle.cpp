@@ -40,9 +40,7 @@ Intersection		Triangle::hit(const glm::dvec3 &view, const glm::dvec3 &vecDir) co
 
 	double b = deterB / _deterM;
 
-	double g12 = b11;
-	double g22 = b21;
-	double deterG = _m11 * g22 - _m12 * g12;
+	double deterG = _m11 * b21 - _m12 * b11;
 
 	double g = deterG / _deterM;
 	double a = 1 - b - g;
