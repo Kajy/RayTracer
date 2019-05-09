@@ -73,6 +73,11 @@ public:
             colorJson["alpha"]
         };
     }
+    struct VertRef
+    {
+        VertRef( int v, int vt, int vn ) : v(v), vt(vt), vn(vn) { }
+        int v, vt, vn;
+    };
 
     static Sphere       *ParseSphere(const json &sphereJson) {
         Sphere          *sphere = ParseHitableObject<Sphere>(sphereJson);
@@ -92,18 +97,109 @@ public:
         return plane;
     }
 
-    static std::vector<Triangle *>      ParseObj(const json &j) {
 
-        std::string     filename(j.at("path").get<std::string>());
+    static std::vector<Triangle *>      ParseObj(const json &json) {
+
+        std::string     filename(json.at("path").get<std::string>());
         std::ifstream   file(getWorkingPath() + "/scenes/" + filename);
-        std::vector<glm::dvec3> valuesVertices;
+        std::vector<glm::dvec4> valuesVertices;
         std::vector<glm::dvec3> valuesTextures;
         std::vector<glm::dvec3> valuesNormal;
         std::vector<Triangle *> triangles;
 
         std::string::size_type sz;     // alias of size_t
 
-		if (file.is_open()) {
+        if (file.is_open()) {
+            std::string line;
+            while (std::getline(file, line)) {
+
+                std::istringstream lineSS( line );
+                std::string lineType;
+                lineSS >> lineType;
+
+                // vertex
+                if( lineType == "v" )
+                {
+                    double x = 0, y = 0, z = 0, w = 1;
+                    lineSS >> x >> y >> z >> w;
+                    valuesVertices.emplace_back(glm::vec4( x, y, z, w ) );
+                }
+
+                // texture
+                if( lineType == "vt" )
+                {
+                    double u = 0, v = 0, w = 0;
+                    lineSS >> u >> v >> w;
+                    valuesTextures.emplace_back(glm::vec3( u, v, w ) );
+                }
+
+                // normal
+                if( lineType == "vn" )
+                {
+                    double i = 0, k = 0, l = 0;
+                    lineSS >> i >> k >> l;
+                    valuesNormal.emplace_back(glm::normalize( glm::vec3( i, k, l ) ) );
+                }
+
+                // polygon
+                if( lineType == "f" )
+                {
+                    std::vector< VertRef > refs;
+                    std::string refStr;
+                    while( lineSS >> refStr )
+                    {
+                        std::istringstream ref( refStr );
+                        std::string vStr, vtStr, vnStr;
+                        std::getline( ref, vStr, '/' );
+                        std::getline( ref, vtStr, '/' );
+                        std::getline( ref, vnStr, '/' );
+                        int v = atoi( vStr.c_str() );
+                        int vt = atoi( vtStr.c_str() );
+                        int vn = atoi( vnStr.c_str() );
+                        v  = (  v >= 0 ?  v : valuesVertices.size() +  v );
+                        vt = ( vt >= 0 ? vt : valuesTextures.size() + vt );
+                        vn = ( vn >= 0 ? vn : valuesNormal.size()   + vn );
+                        refs.emplace_back( v, vt, vn );
+                    }
+
+                    // triangulate, assuming n>3-gons are convex and coplanar
+                    for( size_t i = 1; i+1 < refs.size(); ++i )
+                    {
+                        const VertRef* p[3] = { &refs[0], &refs[i], &refs[i+1] };
+
+                        // http://www.opengl.org/wiki/Calculating_a_Surface_Normal
+                        glm::dvec3 U( valuesVertices[ p[1]->v - 1 ] - valuesVertices[ p[0]->v - 1 ] );
+                        glm::dvec3 V( valuesVertices[ p[2]->v - 1] - valuesVertices[ p[0]->v - 1] );
+                        glm::dvec3 faceNormal = glm::normalize( glm::cross( U, V ) );
+
+                        std::vector<std::tuple<glm::dvec3, glm::dvec3, glm::dvec3>> mapping;
+
+                        for( size_t j = 0; j < 3; ++j )
+                        {
+                            mapping.emplace_back(
+                                    glm::vec3( valuesVertices[ p[j]->v - 1] ),
+                                    glm::dvec3(valuesTextures[ p[j]->vt - 1]),
+                                    p[j]->vn - 1 != 0 ? valuesNormal[ p[j]->vn - 1] : faceNormal);
+                        }
+                        Triangle *triangle = ParseHitableObject<Triangle>(json);
+                        triangle->setVertices(mapping[0], mapping[1], mapping[2]);
+                        triangles.emplace_back(triangle);
+
+#if _DEBUG
+                        for (auto &vert : mapping) {
+                            glm::dvec3 v, vt, vn;
+                            std::tie(v, vt, vn) = vert;
+                            std::cout << "======================================================" << std::endl;
+                            std::cout << "VERTEX " << v.x << " " << v.y << " " << v.z << std::endl;
+                            std::cout << "TEXTURE " << vt.x << " " << vt.y << std::endl;
+                            std::cout << "NORMAL " << vn.x << " " << vn.y << " " << vn.z << std::endl;
+                        }
+#endif
+                    }
+                }
+            }
+        }
+		/*if (file.is_open()) {
 			std::string line;
 			int token = 0, currentLine = 1, currentColumn = 0;
 			while (file.good()) {
@@ -187,7 +283,7 @@ public:
 					Triangle *triangle = ParseHitableObject<Triangle>(j);
 					triangle->setVertices(mapping[0], mapping[1], mapping[2]);
 					triangles.push_back(triangle);
-					/*std::cout << "TRIANGLE" << std::endl;
+					*//*std::cout << "TRIANGLE" << std::endl;
 					for (auto &triangle : mapping) {
 						glm::dvec3 v, vt, vn;
 						std::tie(v, vt, vn) = triangle;
@@ -196,15 +292,15 @@ public:
 						std::cout << "TEXTURE " << vt.x << " " << vt.y << std::endl;
 						std::cout << "NORMAL " << vn.x << " " << vn.y << " " << vn.z << std::endl;
 					}
-					std::cout << std::endl;*/
+					std::cout << std::endl;*//*
 
 				}
 			}
 			std::cout << std::endl;
-		}
+            file.close();
+        }*/
 		else
 			std::cout << "Error obj file : " << (getWorkingPath() + "/scenes/" + filename) << std::endl;
-        file.close();
         return triangles;
     }
 
