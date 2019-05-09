@@ -176,12 +176,12 @@ public:
                         glm::dvec3 V( valuesVertices[ p[2]->v ] - valuesVertices[ p[0]->v ] );
                         glm::dvec3 faceNormal = glm::normalize( glm::cross( U, V ) );
 
-                        std::vector<std::tuple<glm::dvec3, glm::dvec3, glm::dvec3>> mapping;
+                        std::vector<std::tuple<glm::dvec3, glm::dvec2, glm::dvec3>> mapping;
                         for( size_t j = 0; j < 3; ++j )
                         {
                             mapping.emplace_back(
-                                    p[j]->v >= valuesVertices.size() ? glm::dvec3(0, 0, 0) : glm::dvec3( valuesVertices[ p[j]->v ] ),
-                                    p[j]->vt >= valuesTextures.size() ? glm::dvec3(0, 0, 0) : glm::dvec3(valuesTextures[ p[j]->vt ]),
+                                    p[j]->v >= valuesVertices.size() ? glm::dvec3(0.0, 0.0, 0.0) : glm::dvec3( valuesVertices[ p[j]->v ] ),
+                                    p[j]->vt >= valuesTextures.size() ? glm::dvec2(0.0, 0.0) : glm::dvec2(valuesTextures[ p[j]->vt ]),
                                     p[j]->vn != 0 ? valuesNormal[ p[j]->vn ] : faceNormal);
                         }
                         Triangle *triangle = ParseHitableObject<Triangle>(json);
