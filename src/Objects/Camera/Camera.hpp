@@ -5,7 +5,6 @@
 #ifndef RT_CAMERA_HPP
 #define RT_CAMERA_HPP
 
-#include <glm/detail/type_vec.hpp>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "../AObject.hpp"
