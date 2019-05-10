@@ -12,7 +12,7 @@
 
 #define	FOV	30.0
 
-#define ANTI_ALIASING 1
+#define ANTI_ALIASING 4
 
 #define	BLACK_COLOR	0x00000000
 #define WHITE_COLOR	0xFFFFFFFF
