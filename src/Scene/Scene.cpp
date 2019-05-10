@@ -24,7 +24,7 @@ Color		    Scene::renderScene(double x, double y, uint32_t maxWidth, uint32_t ma
 
     for (uint32_t aa_x = 0; aa_x < ANTI_ALIASING; ++aa_x) {
         for (uint32_t aa_y = 0; aa_y < ANTI_ALIASING; ++aa_y) {
-            Ray ray(_posView, glm::normalize(_view.screenToWorldPos(x, y) - _posView));
+            Ray ray(_posView, glm::normalize(_view.screenToWorldPos(x + static_cast<double>(aa_x) / ANTI_ALIASING, y + static_cast<double>(aa_y) / ANTI_ALIASING) - _posView));
 
             // RENDER PIPELINE
 
@@ -42,8 +42,6 @@ Color		    Scene::renderScene(double x, double y, uint32_t maxWidth, uint32_t ma
                 finalRGB.r += intersection.color.red;
                 finalRGB.g += intersection.color.green;
                 finalRGB.b += intersection.color.blue;
-
-                return intersection.color;
             }
         }
     }

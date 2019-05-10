@@ -42,10 +42,9 @@ void    RayTracer::renderLoop()
             }
         }));
     }
-    std::cout << std::endl;
     for (uint32_t i = 0; i < cores; ++i)
         future_vector[i].wait();
-    std::cout << "100%" << std::endl;
+
     auto end = std::chrono::steady_clock::now();
     std::cout << "Elapsed time in microseconds : "
               << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()
