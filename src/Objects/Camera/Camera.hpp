@@ -9,7 +9,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "../AObject.hpp"
 #include "Common/Debug.hpp"
-#include "Config/config.hpp"
+#include "Config/Configuration.hpp"
 #ifdef _WIN32
     #include "glm/vec3.hpp"
 #elif __APPLE__ or __linux__
@@ -18,8 +18,10 @@
 
 class Camera : public AObject {
 public:
-	Camera() : Camera(glm::dvec3(-10.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, 1.0), glm::dvec2(WINDOW_W, WINDOW_H), FOV) {};
-	Camera(glm::dvec3 const &position, glm::dvec3 const &lookAt, glm::dvec3 const &upVector, glm::dvec2 const &screenSize, float fov);
+	Camera() : Camera(glm::dvec3(-10.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, 1.0), Resolution {1280, 720}, Resolution {1280, 720}, 30.0) {};
+	Camera(glm::dvec3 const &position, const Resolution &screenSize, const Resolution &drawableSurface, double fov);
+	Camera(glm::dvec3 const &position, glm::dvec3 const &lookAt, glm::dvec3 const &upVector, const Resolution &screenSize, const Resolution &drawableSurface,double fov);
+	Camera(glm::dvec3 const &position, glm::dvec3 const &lookAt, glm::dvec3 const &upVector);
 	Camera(const glm::dvec3 &position);
 	~Camera() = default;
 
@@ -27,7 +29,15 @@ public:
 
 private:
     glm::dvec3      _n, _u, _v;
-    glm::dvec2      _screenSize;
+    Resolution      _screenSize;
+    Resolution      _drawableSurface;
+public:
+    void setDrawableSurface(const Resolution &drawableSurface);
+
+public:
+    void setScreenSize(const Resolution &screenSize);
+
+private:
     double          _distanceWithScreen;
     glm::dvec3      _center, _L;
 };

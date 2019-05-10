@@ -1,0 +1,9 @@
+{
+  "resolution": {
+    "width": 1280,
+    "height": 720
+  },
+  "maxDistance": 999,
+  "fov": 30,
+  "antiAliasing": 1
+}

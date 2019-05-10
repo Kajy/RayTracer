@@ -10,7 +10,7 @@
 
 #include <glm/glm.hpp>
 
-#include "Config/config.hpp"
+#include "Config/Configuration.hpp"
 #include "Common/Intersection.hpp"
 #include "Common/Debug.hpp"
 

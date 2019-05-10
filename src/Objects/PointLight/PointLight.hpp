@@ -7,7 +7,7 @@
 
 #include <string>
 #include <cmath>
-#include "Config/config.hpp"
+#include "Config/Configuration.hpp"
 #include "Objects/Camera/Camera.hpp"
 #include "Common/Debug.hpp"
 #include <Objects/AHitable.hpp>

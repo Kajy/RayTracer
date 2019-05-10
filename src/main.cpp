@@ -4,18 +4,22 @@
 #include <iostream>
 #include <signal.h>
 #include <unistd.h>
+#include <Common/Parser.hpp>
 #include "RayTracer/RayTracer.hpp"
 
 int main(int argc, char **argv) {
-    if (argc != 2) {
-        Debug::printError("Usage : ./RT {filename}.json");
+    if (argc != 3) {
+        Debug::printError("Usage : ./RT {config}.json {filename}.json");
         return 1;
     }
-    std::string filename(argv[1]);
-    RayTracer       app;
 
-    app.setFilename(filename);
-    app.setScene(RayTracer::parse(filename));
+    std::string     config(argv[1]);
+    std::string     scene(argv[2]);
+    RayTracer       app(Parser::ParseConfiguration(config));
+
+    app.setFilename(scene);
+    app.setScene(app.parse(scene));
     app.run();
+
     return 0;
 }

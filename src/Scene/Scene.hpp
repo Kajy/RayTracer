@@ -15,7 +15,7 @@
 #include <vector>
 #include <Objects/ALight.hpp>
 
-#include "Config/config.hpp"
+#include "Config/Configuration.hpp"
 #include "Common/Intersection.hpp"
 #include "Objects/AHitable.hpp"
 #include "Objects/Camera/Camera.hpp"

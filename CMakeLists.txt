@@ -31,7 +31,7 @@ function(setupWindows)
 			src/RayTracer/RayTracer.hpp
 			src/RayTracer/RayTracer.cpp
 			src/Window/Window.hpp src/Window/Window.cpp
-			src/Config/config.hpp
+            src/Config/Configuration.hpp
 			src/EventHandler/EventHandler.hpp
 			src/EventHandler/EventHandler.cpp
 			src/Common/Debug.hpp

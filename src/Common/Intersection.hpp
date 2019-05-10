@@ -7,7 +7,7 @@
 
 #include <glm/vec3.hpp>
 
-#include "Config/config.hpp"
+#include "Config/Configuration.hpp"
 #include "Common/Color.hpp"
 
 typedef struct   Intersection {

@@ -8,7 +8,7 @@
 
 
 Scene::Scene():
-	_view(glm::dvec3(-15.0, 0, 0), glm::dvec3(0.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, 1.0), glm::vec2(WINDOW_W, WINDOW_H), FOV)
+	_view(glm::dvec3(-15.0, 0, 0), glm::dvec3(0.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, 1.0), Resolution {1280.0, 720.0}, Resolution {1280.0, 720.0}, 30.0)
 {
 }
 
@@ -42,6 +42,7 @@ Color		    Scene::renderScene(double x, double y, uint32_t maxWidth, uint32_t ma
                 finalRGB.r += intersection.color.red;
                 finalRGB.g += intersection.color.green;
                 finalRGB.b += intersection.color.blue;
+                return intersection.color;
             }
         }
     }

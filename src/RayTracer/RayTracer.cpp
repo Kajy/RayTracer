@@ -13,8 +13,14 @@
 using namespace nlohmann;
 
 RayTracer::RayTracer():
-    _window(WINDOW_W, WINDOW_H),
-    _antiAliasing(1)
+    _window(WINDOW_W, WINDOW_H)
+{
+    Debug::printInfo("Welcome on the RayTracer of KJ.");
+}
+
+RayTracer::RayTracer(const Configuration &configuration):
+    _window((int)configuration.resolution.width, (int)configuration.resolution.height),
+    _config(configuration)
 {
     Debug::printInfo("Welcome on the RayTracer of KJ.");
 }
@@ -85,16 +91,12 @@ void RayTracer::setScene(const Scene &scene) {
     _scene = scene;
 }
 
-void RayTracer::setAntiAliasing(uint32_t aa) {
-    _antiAliasing = aa;
-}
-
-static void parseCamera(Scene &scene, const json &json) {
-    Camera camera = Parser::ParseCamera(json["camera"]);
+void parseCamera(Scene &scene, const json &json, const Configuration &config, const Resolution &drawableSize) {
+    Camera camera = Parser::ParseCamera(json["camera"], config, drawableSize);
     scene.setView(camera);
 }
 
-static void parseObjects(Scene &scene, const json &jsonFile) {
+void parseObjects(Scene &scene, const json &jsonFile) {
     std::vector<AHitable *> objectsParsed;
 
     for (const json &object: jsonFile["objects"]) {
@@ -123,7 +125,7 @@ static void parseObjects(Scene &scene, const json &jsonFile) {
     scene.setHitableObjects(objectsParsed);
 }
 
-static void parseLights(Scene &scene, const json &jsonFile) {
+void parseLights(Scene &scene, const json &jsonFile) {
     std::vector<ALight *>   lightsParsed;
 
     for (const json &objectLight : jsonFile["lights"]) {
@@ -141,21 +143,24 @@ static void parseLights(Scene &scene, const json &jsonFile) {
 
 Scene RayTracer::parse(const std::string &filename) {
     std::vector<AHitable>   objectArr;
-    std::ifstream           file(filename);
-    json                    jsonFile;
+
+    std::ifstream           sceneFile(filename);
+    json                    jsonScene;
     Scene                   scene;
 
     try {
-        file >> jsonFile;
+        sceneFile >> jsonScene;
     } catch (nlohmann::detail::parse_error &e) {
         Debug::printError(e.what());
         Debug::printError("Exit");
         std::exit(1);
     }
 
-    parseCamera(scene, jsonFile);
-    parseObjects(scene, jsonFile);
-    parseLights(scene, jsonFile);
+    parseCamera(scene, jsonScene, this->_config, Resolution {
+        (double)this->_window.getDrawableSurfaceWidth(),
+        (double)this->_window.getDrawableSurfaceHeight()});
+    parseObjects(scene, jsonScene);
+    parseLights(scene, jsonScene);
 
     return scene;
 }
@@ -166,4 +171,12 @@ const std::string &RayTracer::getFilename() const {
 
 void RayTracer::setFilename(const std::string &filename) {
     _filename = filename;
+}
+
+const Configuration &RayTracer::getConfig() const {
+    return _config;
+}
+
+void RayTracer::setConfig(const Configuration &config) {
+    _config = config;
 }

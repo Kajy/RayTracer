@@ -2,8 +2,22 @@
   "camera": {
     "position": {
       "x": -46,
-      "y": 382,
-      "z": 110
+      "y": 420,
+      "z": 90
+    },
+    "lookAt": {
+      "position": {
+        "x": 34,
+        "y": 34,
+        "z": 34
+      }
+    },
+    "upVector": {
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 1
+      }
     }
   },
   "lights": [
