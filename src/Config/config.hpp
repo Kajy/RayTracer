@@ -8,9 +8,9 @@
 #define DEBUG false
 #define WINDOW_W 1280
 #define WINDOW_H 720
-#define MAX_DISTANCE 50
+#define MAX_DISTANCE 999
 
-#define	FOV	360
+#define	FOV	30.0
 
 #define ANTI_ALIASING 1
 
