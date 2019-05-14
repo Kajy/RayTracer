@@ -14,7 +14,7 @@
 #include <future>
 #include <thread>
 
-#include "Config/config.hpp"
+#include "Config/Configuration.hpp"
 #include "Window/Window.hpp"
 #include "EventHandler/EventHandler.hpp"
 #include "Scene/Scene.hpp"
@@ -22,9 +22,10 @@
 class   RayTracer {
 public:
     RayTracer();
+    RayTracer(const Configuration &configuration);
     ~RayTracer();
 
-    static Scene   parse(const std::string &filename);
+    Scene            parse(const std::string &filename);
     void    run();
 
 private:
@@ -32,8 +33,11 @@ private:
     EventHandler	_eventHandler;
 	Scene			_scene;
 	std::string     _filename;
+    Configuration   _config;
+public:
+    const Configuration &getConfig() const;
 
-	uint32_t        _antiAliasing;
+    void setConfig(const Configuration &config);
 
 public:
     const std::string &getFilename() const;
@@ -50,8 +54,6 @@ public:
     const Scene &getScene() const;
 
     void setScene(const Scene &scene);
-
-    void setAntiAliasing(uint32_t aa);
 
     void renderLoop();
 };

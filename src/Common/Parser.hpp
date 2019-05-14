@@ -19,6 +19,8 @@
 #endif
 #include <regex>
 #include <sstream>
+#include <fstream>
+#include <Objects/Triangle/Triangle.hpp>
 #include "Utils.hpp"
 
 using namespace nlohmann;
@@ -86,8 +88,15 @@ public:
         return sphere;
     }
 
-    static Camera       ParseCamera(const json &j) {
-        return Camera {ParsePosition(j)};
+    static Camera       ParseCamera(const json &j, const Configuration &configuration, const Resolution &drawableSurface) {
+        return Camera {
+            ParsePosition(j),
+            ParsePosition(j["lookAt"]),
+            ParsePosition(j["upVector"]),
+            configuration.resolution,
+            drawableSurface,
+            configuration.fov
+        };
     }
 
     static Plane        *ParsePlane(const json &j) {
@@ -97,6 +106,26 @@ public:
         return plane;
     }
 
+    static Configuration        ParseConfiguration(const std::string &filename) {
+        std::ifstream           configFile(filename);
+        json                    jsonConfig;
+
+        try {
+            configFile >> jsonConfig;
+        } catch (nlohmann::detail::parse_error &e) {
+            Debug::printError(e.what());
+            Debug::printError("Exit");
+            std::exit(1);
+        }
+        Configuration                   configuration;
+
+        configuration.antiAliasing = jsonConfig["antiAliasing"];
+        configuration.fov = jsonConfig["fov"];
+        configuration.maxDistance = jsonConfig["maxDistance"];
+        configuration.resolution = Resolution {jsonConfig["resolution"]["width"], jsonConfig["resolution"]["height"]};
+
+        return configuration;
+    }
 
     static std::vector<Triangle *>      ParseObj(const json &json) {
 
