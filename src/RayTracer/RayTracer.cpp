@@ -9,6 +9,7 @@
 #include <Objects/ALight.hpp>
 #include <Common/Utils.hpp>
 #include <Objects/Plane/Plane.hpp>
+#include <Objects/Box/Box.hpp>
 
 using namespace nlohmann;
 
@@ -122,6 +123,7 @@ void parseObjects(Scene &scene, const json &jsonFile) {
             }
         }
     }
+    objectsParsed.push_back(new Box(glm::dvec3(-10, -10, -10), glm::dvec3(80, 80, 80)));
     scene.setHitableObjects(objectsParsed);
 }
 

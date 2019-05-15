@@ -40,6 +40,7 @@ function(setupWindows)
 			src/Objects/Sphere/Sphere.cpp
 			src/Objects/Plane/Plane.cpp
 			src/Objects/Polygon/Polygon.cpp
+			src/Objects/Box/Box.cpp
 			)
 
 	target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARY})
@@ -77,6 +78,7 @@ function(setupLinux)
 			src/Common/Utils.hpp
             src/Objects/Plane/Plane.cpp
 			src/Objects/Polygon/Polygon.cpp
+			src/Objects/Box/Box.cpp
 			)
 
 	string(STRIP ${SDL2_LIBRARIES} SDL2_LIBRARIES)
