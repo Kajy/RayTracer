@@ -32,19 +32,20 @@ Box::Box(const glm::dvec3 &tMin, const glm::dvec3 &tMax) : AHitable(
     _triangles.emplace_back(new Triangle(BOX_VERTICES[1], BOX_VERTICES[7], BOX_VERTICES[3]));
     _triangles.emplace_back(new Triangle(BOX_VERTICES[3], BOX_VERTICES[7], BOX_VERTICES[5]));
     _triangles.emplace_back(new Triangle(BOX_VERTICES[6], BOX_VERTICES[0], BOX_VERTICES[4]));
-    _triangles.emplace_back(new Triangle(BOX_VERTICES[4], BOX_VERTICES[0], BOX_VERTICES[3]));
+    _triangles.emplace_back(new Triangle(BOX_VERTICES[4], BOX_VERTICES[0], BOX_VERTICES[2]));
 }
 
 Intersection Box::hit(const glm::dvec3 &view, const glm::dvec3 &vecDir) const {
 
+    Intersection  finalInter;
     for (auto &it: _triangles) {
         Intersection newHit = it->hit(view, vecDir);
-        if (newHit.isHit) {
-            return newHit;
+        if (newHit.isHit && finalInter.distanceWithViewer > newHit.distanceWithViewer) {
+            finalInter = newHit;
         }
     }
 
-    return Intersection();
+    return finalInter;
 }
 
 glm::dvec3 Box::calcNormal(const glm::dvec3 &hitPoint) const {
