@@ -4,6 +4,20 @@
       "x": -30.0,
       "y": 0,
       "z": 0
+    },
+    "lookAt": {
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    },
+    "upVector": {
+      "position": {
+        "x": 0,
+        "y": 1,
+        "z": 0
+      }
     }
   },
   "lights": [
@@ -28,7 +42,7 @@
       "type": "sphere",
       "position": {
         "x": 0.0,
-        "y": -10.0,
+        "y": 0.0,
         "z": 0.0
       },
       "radius": 5,
