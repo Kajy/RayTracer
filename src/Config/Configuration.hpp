@@ -11,8 +11,7 @@
 #define MAX_DISTANCE 999
 
 #define	FOV	30.0
-
-#define ANTI_ALIASING 1
+#define BIAS 0.001
 
 typedef struct s_Resolution {
     double      width;

@@ -18,7 +18,7 @@
 
 class Camera : public AObject {
 public:
-	Camera() : Camera(glm::dvec3(-10.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, 1.0), Resolution {1280, 720}, Resolution {1280, 720}, 30.0) {};
+	Camera() : Camera(glm::dvec3(-10.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, 1.0), Resolution {1280, 720}, Resolution {1280, 720}, FOV) {};
 	Camera(glm::dvec3 const &position, const Resolution &screenSize, const Resolution &drawableSurface, double fov);
 	Camera(glm::dvec3 const &position, glm::dvec3 const &lookAt, glm::dvec3 const &upVector, const Resolution &screenSize, const Resolution &drawableSurface,double fov);
 	Camera(glm::dvec3 const &position, glm::dvec3 const &lookAt, glm::dvec3 const &upVector);
