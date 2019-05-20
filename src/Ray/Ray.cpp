@@ -31,15 +31,17 @@ Intersection        Ray::launchRay(std::vector<AHitable *> const &shapeObjects)
 Intersection      Ray::searchClosestHit(std::vector<AHitable *> const &shapeObjects) {
 
     Intersection    hit;
+    uint32_t        idxObj = 0;
 
     for (auto const &it: shapeObjects) {
         Intersection newHit = it->hit(_origin, _dir);
         if (newHit.distanceWithViewer < hit.distanceWithViewer) {
             hit = newHit;
         }
+        ++idxObj;
     }
 
-    return (hit);
+    return hit;
 }
 
 void        Ray::setDirection(double x, double y, double z) {

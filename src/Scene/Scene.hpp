@@ -30,7 +30,7 @@ public:
 	Scene();
 	~Scene();
 
-	Color	                renderScene(double x, double y, uint32_t maxWidth, uint32_t maxHeight);
+	Color	                renderScene(double x, double y, uint32_t maxWidth, uint32_t maxHeight, uint32_t aa);
 	Intersection            renderLightsEffect(Intersection const &inter);
 	Intersection            renderShadowsEffect(Intersection const &inter);
 

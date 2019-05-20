@@ -5,5 +5,5 @@
   },
   "maxDistance": 999,
   "fov": 30,
-  "antiAliasing": 1
+  "antiAliasing": 2
 }

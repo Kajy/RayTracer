@@ -17,14 +17,14 @@ Scene::~Scene()
     _hitableObjects.clear();
 }
 
-Color		    Scene::renderScene(double x, double y, uint32_t maxWidth, uint32_t maxHeight) {
+Color		    Scene::renderScene(double x, double y, uint32_t maxWidth, uint32_t maxHeight, uint32_t aa) {
 
     glm::dvec3  finalRGB;
     glm::dvec3	_posView = _view.getPosition();
 
-    for (uint32_t aa_x = 0; aa_x < ANTI_ALIASING; ++aa_x) {
-        for (uint32_t aa_y = 0; aa_y < ANTI_ALIASING; ++aa_y) {
-            Ray ray(_posView, glm::normalize(_view.screenToWorldPos(x + static_cast<double>(aa_x) / ANTI_ALIASING, y + static_cast<double>(aa_y) / ANTI_ALIASING) - _posView));
+    for (uint32_t aa_x = 0; aa_x < aa; ++aa_x) {
+        for (uint32_t aa_y = 0; aa_y < aa; ++aa_y) {
+            Ray ray(_posView, glm::normalize(_view.screenToWorldPos(x + static_cast<double>(aa_x) / aa, y + static_cast<double>(aa_y) / aa) - _posView));
 
             // RENDER PIPELINE
 
@@ -37,35 +37,33 @@ Color		    Scene::renderScene(double x, double y, uint32_t maxWidth, uint32_t ma
                 intersection = renderLightsEffect(intersection);
 
                 // --- SHADOW EFFECTS
-                //intersection = renderShadowsEffect(intersection);
+                intersection = renderShadowsEffect(intersection);
 
                 finalRGB.r += intersection.color.red;
                 finalRGB.g += intersection.color.green;
                 finalRGB.b += intersection.color.blue;
-                return intersection.color;
+                //return intersection.color;
             }
         }
     }
-	return Color((unsigned char)(finalRGB.r / (ANTI_ALIASING * ANTI_ALIASING)), (unsigned char)(finalRGB.g / (ANTI_ALIASING * ANTI_ALIASING)), (unsigned char)(finalRGB.b / (ANTI_ALIASING * ANTI_ALIASING)), 255);
+    uint32_t powAa = aa * aa;
+	return Color(static_cast<unsigned char>(finalRGB.r / (powAa)), static_cast<unsigned char>(finalRGB.g / (powAa)), static_cast<unsigned char>(finalRGB.b / (powAa)), 255);
 }
 
 Intersection            Scene::renderShadowsEffect(Intersection const &inter) {
 
     Intersection    inShadow(inter);
-	double			dotAvg = 0;
 	uint32_t		shadowCount = _lights.size();
 
     for (auto const &it: _lights) {
-		glm::dvec3	dirToLight = glm::normalize(it->getPosition() - inter.hitPosition);
-		Ray ray(inter.hitPosition, dirToLight);
-		Intersection toLight = ray.launchRay(this->_hitableObjects);
-		double distanceWithLight = glm::length2(dirToLight);
-		//std::cout << toLight.distanceWithViewer << std::endl;
-		if (toLight.isHit && toLight.distanceWithViewer > 0.01)
-			--shadowCount;
+        glm::dvec3 dirToLight = it->getPosition() - inter.hitPosition;
+        Ray ray(inter.hitPosition + inter.normal * BIAS, glm::normalize(dirToLight));
+        Intersection toLight = ray.launchRay(this->_hitableObjects);
+        if (toLight.isHit)
+            --shadowCount;
     }
 
-	inShadow.color = inShadow.color * (shadowCount / (float)_lights.size());
+	inShadow.color = inShadow.color * (shadowCount / static_cast<float>(_lights.size()));
 
     return inShadow;
 }
