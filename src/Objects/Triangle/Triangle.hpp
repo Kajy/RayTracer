@@ -25,6 +25,11 @@ public:
     Triangle();
 	Triangle(glm::dvec3 const &A, glm::dvec3 const &B, glm::dvec3 const &C);
 
+    Triangle(const glm::dvec3 &A, const glm::dvec3 &B, const glm::dvec3 &C, const Color &color);
+
+    Triangle(const glm::dvec3 &A, const glm::dvec3 &B, const glm::dvec3 &C, const Color &color, double refractionIndex,
+                 double shining);
+
     ~Triangle() = default;
 
 	Intersection		    hit(const glm::dvec3 &view, const glm::dvec3 &vecDir) const override;

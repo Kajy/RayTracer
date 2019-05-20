@@ -121,9 +121,14 @@ void parseObjects(Scene &scene, const json &jsonFile) {
                 objectsParsed.insert(std::end(objectsParsed), std::begin(triangles), std::end(triangles));
                 break;
             }
+            case Utils::str2int("box"): {
+                Box *box = Parser::ParseBox(object);
+                objectsParsed.emplace_back(box);
+                break;
+            }
+
         }
     }
-    objectsParsed.push_back(new Box(glm::dvec3(-10, -10, -10), glm::dvec3(80, 80, 80)));
     scene.setHitableObjects(objectsParsed);
 }
 

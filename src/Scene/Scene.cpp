@@ -42,7 +42,7 @@ Color		    Scene::renderScene(double x, double y, uint32_t maxWidth, uint32_t ma
                 finalRGB.r += intersection.color.red;
                 finalRGB.g += intersection.color.green;
                 finalRGB.b += intersection.color.blue;
-                //return intersection.color;
+                return intersection.color;
             }
         }
     }

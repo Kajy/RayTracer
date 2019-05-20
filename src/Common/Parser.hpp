@@ -21,6 +21,7 @@
 #include <sstream>
 #include <fstream>
 #include <Objects/Triangle/Triangle.hpp>
+#include <Objects/Box/Box.hpp>
 #include "Utils.hpp"
 
 using namespace nlohmann;
@@ -66,6 +67,11 @@ public:
         return glm::dvec3(positionJson["x"], positionJson["y"], positionJson["z"]);
     }
 
+    static glm::dvec3   ParseSize(const json &j) {
+        const json &positionJson = j["size"];
+        return glm::dvec3(positionJson["x"], positionJson["y"], positionJson["z"]);
+    }
+
     static Color        ParseColor(const json &j) {
         const json &colorJson = j["color"];
         return Color {
@@ -75,11 +81,6 @@ public:
             colorJson["alpha"]
         };
     }
-    struct VertRef
-    {
-        VertRef( int v, int vt, int vn ) : v(v), vt(vt), vn(vn) { }
-        int v, vt, vn;
-    };
 
     static Sphere       *ParseSphere(const json &sphereJson) {
         Sphere          *sphere = ParseHitableObject<Sphere>(sphereJson);
@@ -107,6 +108,7 @@ public:
         return plane;
     }
 
+
     static Configuration        ParseConfiguration(const std::string &filename) {
         std::ifstream           configFile(filename);
         json                    jsonConfig;
@@ -127,6 +129,22 @@ public:
 
         return configuration;
     }
+
+    static Box                  *ParseBox(const json &j) {
+        glm::dvec3              position(ParsePosition(j));
+        glm::dvec3              size(ParseSize(j));
+        Color                   color = ParseColor(j);
+        double                  refractionIndex(j["refractionIndex"]);
+        double                  shining(j["shining"]);
+
+        return new Box(position, size, color, refractionIndex, shining);
+    }
+
+    struct VertRef
+    {
+        VertRef( int v, int vt, int vn ) : v(v), vt(vt), vn(vn) { }
+        int v, vt, vn;
+    };
 
     static std::vector<Triangle *>      ParseObj(const json &json) {
 

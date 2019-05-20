@@ -12,9 +12,9 @@
 
 class Box : public AHitable {
 public:
-    Box();
-
     Box(const glm::dvec3 &tMin, const glm::dvec3 &tMax);
+
+    Box(const glm::dvec3 &position, const glm::dvec3 &size, const Color &color, double refractionIndex, double shining);
 
     Intersection hit(const glm::dvec3 &view, const glm::dvec3 &vecDir) const override;
 
