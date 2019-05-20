@@ -102,6 +102,7 @@ public:
     static Plane        *ParsePlane(const json &j) {
         Plane           *plane = ParseHitableObject<Plane>(j);
         plane->setHeight(j["height"]);
+        plane->normalizePosition();
 
         return plane;
     }
