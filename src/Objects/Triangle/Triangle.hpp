@@ -32,7 +32,7 @@ public:
 
     ~Triangle() = default;
 
-	Intersection		    hit(const glm::dvec3 &view, const glm::dvec3 &vecDir) const override;
+	Intersection		    hit(const glm::dvec3 &view, const glm::dvec3 &vecDir, const glm::dvec3 &invDir) const override;
 	glm::dvec3				calcNormal(glm::dvec3 const &) const override;
 	void                    setVertices(const std::tuple<glm::dvec3, glm::dvec2, glm::dvec3> &A,
                                         const std::tuple<glm::dvec3, glm::dvec2, glm::dvec3> &B,

@@ -55,7 +55,7 @@ public:
     }
 
 
-    virtual Intersection hit(const glm::dvec3 &view, const glm::dvec3 &vecDir) const = 0;
+    virtual Intersection hit(const glm::dvec3 &view, const glm::dvec3 &vecDir, const glm::dvec3 &invDir) const = 0;
     virtual glm::dvec3      calcNormal(const glm::dvec3 &hitPoint) const = 0;
 
     virtual ~AHitable() = default;

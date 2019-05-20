@@ -146,13 +146,14 @@ public:
         int v, vt, vn;
     };
 
-    static std::vector<Triangle *>      ParseObj(const json &json) {
+    static Polygon*      ParseObj(const json &json) {
 
         std::string     filename(json.at("path").get<std::string>());
         std::ifstream   file(getWorkingPath() + "/scenes/" + filename);
 
         std::vector<glm::dvec4> valuesVertices;
         std::vector<glm::dvec3> valuesTextures;
+        glm::dvec3              tMin(0, 0, 0), tMax(0, 0, 0);
 
         std::vector<glm::dvec3> valuesNormal;
         std::vector<Triangle *> triangles;
@@ -172,7 +173,11 @@ public:
                 {
                     double x = 0, y = 0, z = 0, w = 1;
                     lineSS >> x >> y >> z >> w;
-                    valuesVertices.emplace_back(glm::vec4( x, y, z, w ) );
+                    glm::dvec4 vertice(x, y, z, w);
+
+                    valuesVertices.emplace_back(vertice);
+                    tMin = glm::min(glm::dvec3(vertice), tMin);
+                    tMax = glm::max(glm::dvec3(vertice), tMax);
                 }
 
                 // texture
@@ -180,7 +185,7 @@ public:
                 {
                     double u = 0, v = 0, w = 0;
                     lineSS >> u >> v >> w;
-                    valuesTextures.emplace_back(glm::vec3( u, v, w ) );
+                    valuesTextures.emplace_back(glm::dvec3( u, v, w ) );
                 }
 
                 // normal
@@ -188,7 +193,7 @@ public:
                 {
                     double i = 0, k = 0, l = 0;
                     lineSS >> i >> k >> l;
-                    valuesNormal.emplace_back(glm::normalize( glm::vec3( i, k, l ) ) );
+                    valuesNormal.emplace_back(glm::normalize( glm::dvec3( i, k, l ) ) );
                 }
 
                 // polygon
@@ -354,7 +359,7 @@ public:
         }*/
 		else
 			std::cout << "Error obj file : " << (getWorkingPath() + "/scenes/" + filename) << std::endl;
-        return triangles;
+        return new Polygon(triangles, tMin, tMax);
     }
 
 private:

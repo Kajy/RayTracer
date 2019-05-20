@@ -9,7 +9,7 @@ Plane::Plane() : AHitable(Color(255, 255, 255, 0), glm::dvec3(0, 0, 0)) {
 
 }
 
-Intersection        Plane::hit(const glm::dvec3 &view, const glm::dvec3 &vecDir) const {
+Intersection        Plane::hit(const glm::dvec3 &view, const glm::dvec3 &vecDir, const glm::dvec3 &invDir) const {
     Intersection    hit;
 
     if (vecDir.z != 0.000001) {

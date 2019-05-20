@@ -69,7 +69,6 @@ function(setupLinux)
 			src/Objects/Camera/Camera.cpp
 			src/Objects/Triangle/Triangle.cpp
 			src/Objects/Triangle/Triangle.hpp
-			src/Ray/Ray.hpp
 			src/Ray/Ray.cpp
 			src/Objects/PointLight/PointLight.hpp
 			src/Objects/PointLight/PointLight.cpp

@@ -58,7 +58,7 @@ Triangle::Triangle(glm::dvec3 const &A, glm::dvec3 const &B, glm::dvec3 const &C
 }
 
 
-Intersection		Triangle::hit(const glm::dvec3 &view, const glm::dvec3 &vecDir) const {
+Intersection		Triangle::hit(const glm::dvec3 &view, const glm::dvec3 &vecDir, const glm::dvec3 &invDir) const {
 
 	Intersection	newInter;
 	double t = glm::dot(std::get<0>(_C) - view, _normal) / glm::dot(vecDir, _normal);

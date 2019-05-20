@@ -106,19 +106,19 @@ void parseObjects(Scene &scene, const json &jsonFile) {
         switch (Utils::str2int(type.c_str())) {
             case Utils::str2int("sphere"): {
                 Sphere *sphere = Parser::ParseSphere(object);
-                objectsParsed.push_back(sphere);
+                objectsParsed.emplace_back(sphere);
                 Debug::printPosition(sphere, "sphere");
                 break;
             }
             case Utils::str2int("plane"): {
                 Plane *plane = Parser::ParsePlane(object);
-                objectsParsed.push_back(plane);
+                objectsParsed.emplace_back(plane);
                 Debug::printPosition(plane, "plane");
                 break;
             }
             case Utils::str2int("polygon"): {
-                std::vector<Triangle *> triangles = Parser::ParseObj(object);
-                objectsParsed.insert(std::end(objectsParsed), std::begin(triangles), std::end(triangles));
+                Polygon* polygon = Parser::ParseObj(object);
+                objectsParsed.emplace_back(polygon);
                 break;
             }
             case Utils::str2int("box"): {
