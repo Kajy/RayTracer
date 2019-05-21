@@ -13,10 +13,19 @@ Box::Box(const glm::dvec3 &tMin, const glm::dvec3 &tMax) : AHitable(
 Intersection Box::hit(const glm::dvec3 &view, const glm::dvec3 &vecDir, const glm::dvec3 &invDir) const {
 
     Intersection  finalInter;
-    for (auto &it: _triangles) {
-        Intersection newHit = it->hit(view, vecDir, invDir);
-        if (newHit.isHit && finalInter.distanceWithViewer > newHit.distanceWithViewer) {
-            finalInter = newHit;
+
+    if (_triangles.empty()) {
+        if (checkBounds(view, invDir)) {
+            finalInter.isHit = true;
+            finalInter.color = Color(0,255,0,0);
+            finalInter.distanceWithViewer = 0.1;
+        }
+    } else {
+        for (auto &it: _triangles) {
+            Intersection newHit = it->hit(view, vecDir, invDir);
+            if (newHit.isHit && finalInter.distanceWithViewer > newHit.distanceWithViewer) {
+                finalInter = newHit;
+            }
         }
     }
 
@@ -57,7 +66,7 @@ _tMax(position.x + size.x / 2, position.y + size.y / 2, position.z + size.z / 2)
     _triangles.emplace_back(new Triangle(BOX_VERTICES[4], BOX_VERTICES[0], BOX_VERTICES[2], color, refractionIndex, shining));
 }
 
-bool Box::checkBounds(const glm::dvec3 &view, const glm::dvec3 &invDir) {
+bool Box::checkBounds(const glm::dvec3 &view, const glm::dvec3 &invDir) const {
     double t1 = (_tMin.x - view.x)*invDir.x;
     double t2 = (_tMax.x - view.x)*invDir.x;
 
@@ -70,20 +79,14 @@ bool Box::checkBounds(const glm::dvec3 &view, const glm::dvec3 &invDir) {
     tmin = std::max(tmin, std::min(std::min(t1, t2), tmax));
     tmax = std::min(tmax, std::max(std::max(t1, t2), tmin));
 
+    if (tmin > tmax || tmax < tmin)
+        return false;
+
     t1 = (_tMin.z - view.z)*invDir.z;
     t2 = (_tMax.z - view.z)*invDir.z;
 
     tmin = std::max(tmin, std::min(std::min(t1, t2), tmax));
     tmax = std::min(tmax, std::max(std::max(t1, t2), tmin));
-
-/*
-    for (int i = 1; i < 3; ++i) {
-        t1 = (b.min[i] - r.origin[i])*r.dir_inv[i];
-        t2 = (b.max[i] - r.origin[i])*r.dir_inv[i];
-
-        tmin = max(tmin, min(min(t1, t2), tmax));
-        tmax = min(tmax, max(max(t1, t2), tmin));
-    }*/
 
     return tmax > std::max(tmin, 0.0);
 }

@@ -16,7 +16,7 @@ public:
 
     Box(const glm::dvec3 &position, const glm::dvec3 &size, const Color &color, double refractionIndex, double shining);
 
-    bool checkBounds(const glm::dvec3 &view, const glm::dvec3 &invDir);
+    bool checkBounds(const glm::dvec3 &view, const glm::dvec3 &invDir) const;
 
     Intersection hit(const glm::dvec3 &view, const glm::dvec3 &vecDir, const glm::dvec3 &invDir) const override;
 

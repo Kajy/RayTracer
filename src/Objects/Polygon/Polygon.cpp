@@ -31,3 +31,7 @@ Polygon::Polygon(const std::vector<Triangle *> &triangles, const glm::dvec3 &tMi
     _triangles(triangles),
     _hitBox(new Box(tMin, tMax)){
 }
+
+Box *Polygon::getHitBox() const {
+    return _hitBox;
+}

@@ -118,7 +118,11 @@ void parseObjects(Scene &scene, const json &jsonFile) {
             }
             case Utils::str2int("polygon"): {
                 Polygon* polygon = Parser::ParseObj(object);
+#if DEBUG // display hitbox
+                objectsParsed.emplace_back(polygon->getHitBox());
+#else
                 objectsParsed.emplace_back(polygon);
+#endif
                 break;
             }
             case Utils::str2int("box"): {

@@ -23,6 +23,8 @@ public:
 private:
     std::vector<Triangle *> _triangles;
     Box                     *_hitBox;
+public:
+    Box *getHitBox() const;
 };
 
 

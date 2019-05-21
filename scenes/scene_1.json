@@ -1,9 +1,9 @@
 {
   "camera": {
     "position": {
-      "x": -30.0,
-      "y": 10,
-      "z": -10
+      "x": -10.0,
+      "y": 5,
+      "z": 10
     },
     "lookAt": {
       "position": {
@@ -72,27 +72,6 @@
         "alpha": 255
       },
       "path": "obj/echec.obj"
-    },
-    {
-      "type": "box",
-      "position": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 10.0
-      },
-      "size": {
-        "x": 10,
-        "y": 10,
-        "z": 10
-      },
-      "refractionIndex": 0,
-      "shining": 0,
-      "color": {
-        "red": 255,
-        "green": 0,
-        "blue": 0,
-        "alpha": 255
-      }
     }
   ]
 }
