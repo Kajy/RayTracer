@@ -26,6 +26,9 @@ Window::Window(int w, int h):
 
     SDL_GL_GetDrawableSize(_window.get(), &_drawableSurfaceWidth, &_drawableSurfaceHeight);
 
+	_ratioW = _drawableSurfaceWidth / w;
+	_ratioH = _drawableSurfaceHeight / h;
+
     _image = new Intersection[_drawableSurfaceHeight * _drawableSurfaceWidth];
 
     if ((_renderer = std::unique_ptr<SDL_Renderer, SDLRendererDeleter>(SDL_CreateRenderer(_window.get(), -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE))) == nullptr) {
@@ -42,19 +45,25 @@ Window::~Window() {
 
 void        Window::drawPixel(Color finalColor, uint32_t x, uint32_t y) const
 {
-    _image[y * _drawableSurfaceWidth + x].color.red = finalColor.red;
-    _image[y * _drawableSurfaceWidth + x].color.green = finalColor.green;
-    _image[y * _drawableSurfaceWidth + x].color.blue = finalColor.blue;
-    _image[y * _drawableSurfaceWidth + x].color.alpha = 255;
+	x *= this->_ratioH;
+	y *= this->_ratioW;
+	for (uint32_t trueX = 0; trueX < _ratioH; ++trueX) {
+		for (uint32_t trueY = 0; trueY < _ratioW; ++trueY) {
+			_image[(y + trueY) * _drawableSurfaceWidth + (x + trueX)].color.red = finalColor.red;
+			_image[(y + trueY) * _drawableSurfaceWidth + (x + trueX)].color.green = finalColor.green;
+			_image[(y + trueY) * _drawableSurfaceWidth + (x + trueX)].color.blue = finalColor.blue;
+			_image[(y + trueY) * _drawableSurfaceWidth + (x + trueX)].color.alpha = 255;
+		}
+	}
 }
 
 static void savePNG(SDL_Texture *texture, uint32_t *pixels, uint32_t w, uint32_t h)
 {
-  // Uint32 format_pixels;
-    //  SDL_QueryTexture(texture, &format_pixels, NULL, NULL, NULL);
-  // SDL_Surface *surface = SDL_CreateRGBSurfaceWithFormatFrom(pixels, w, h, 32, w * sizeof(Uint32), format_pixels);
-  //  IMG_SavePNG(surface, "scene.png");
-  //  SDL_FreeSurface(surface);
+	Uint32 format_pixels;
+	SDL_QueryTexture(texture, &format_pixels, NULL, NULL, NULL);
+	SDL_Surface *surface = SDL_CreateRGBSurfaceWithFormatFrom(pixels, w, h, 32, w * sizeof(Uint32), format_pixels);
+	IMG_SavePNG(surface, "scene.png");
+	SDL_FreeSurface(surface);
 }
 
 void        Window::render() const
@@ -93,6 +102,20 @@ int         Window::getDrawableSurfaceWidth() const {
 
 int         Window::getDrawableSurfaceHeight() const {
     return _drawableSurfaceHeight;
+}
+
+uint32_t	Window::getWidth() const {
+	return _windowWidth;
+}
+uint32_t	Window::getHeight() const {
+	return _windowHeight;
+}
+
+float		Window::getRatioW() const {
+	return _ratioW;
+}
+float		Window::getRatioH() const {
+	return _ratioH;
 }
 
 Intersection    *Window::getImage() const {

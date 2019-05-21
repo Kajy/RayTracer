@@ -62,12 +62,20 @@ private:
     uint32_t        _windowHeight;
     int             _drawableSurfaceWidth;
     int             _drawableSurfaceHeight;
+	float			_ratioW, _ratioH;
 
     Intersection    *_image;
 
 public:
     int getDrawableSurfaceWidth() const;
     int getDrawableSurfaceHeight() const;
+
+	uint32_t	getWidth() const;
+	uint32_t	getHeight() const;
+
+	float		getRatioW() const;
+	float		getRatioH() const;
+
 
     Intersection *getImage() const;
 

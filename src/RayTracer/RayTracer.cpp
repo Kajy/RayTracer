@@ -33,8 +33,8 @@ RayTracer::~RayTracer()
 
 void    RayTracer::renderLoop()
 {
-    uint32_t width = _window.getDrawableSurfaceWidth();
-    uint32_t height = _window.getDrawableSurfaceHeight();
+    uint32_t width = _window.getWidth();
+    uint32_t height = _window.getHeight();
     std::size_t max = width * height;
     uint32_t cores = std::thread::hardware_concurrency();
     std::vector<std::future<void>> future_vector;
@@ -45,7 +45,7 @@ void    RayTracer::renderLoop()
             for (uint32_t index(i); index < max; index += cores) {
                 uint32_t x = index % width;
                 uint32_t y = index / width;
-                this->_window.drawPixel(this->_scene.renderScene(x, y, width, height, _config.antiAliasing), x, y);
+                this->_window.drawPixel(this->_scene.renderScene(x, y, width, height, _config.antiAliasing), x , y);
             }
         }));
     }

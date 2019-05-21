@@ -19,7 +19,7 @@ Scene::~Scene()
 
 Color		    Scene::renderScene(double x, double y, uint32_t maxWidth, uint32_t maxHeight, uint32_t aa) {
 
-    glm::dvec3  finalRGB;
+    glm::dvec3  finalRGB(0);
     glm::dvec3	_posView = _view.getPosition();
 
     for (uint32_t aa_x = 0; aa_x < aa; ++aa_x) {
