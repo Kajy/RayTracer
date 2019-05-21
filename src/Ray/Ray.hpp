@@ -16,7 +16,7 @@
     #include <glm/vec3.hpp>
 #endif
 
-class   Ray {
+class Ray {
 
 public:
     Ray();
@@ -35,7 +35,7 @@ public:
 private:
     glm::dvec3      _dir;
     glm::dvec3      _origin;
-
+    glm::dvec3      _invDir;
 };
 
 #endif //RT_RAY_HPP

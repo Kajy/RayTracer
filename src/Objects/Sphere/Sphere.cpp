@@ -17,7 +17,7 @@ Sphere::Sphere(double posX, double posY, double posZ, double radius, Color color
     _color = color;
 }
 
-Intersection		Sphere::hit(const glm::dvec3 &view, const glm::dvec3 &vecDir) const {
+Intersection		Sphere::hit(const glm::dvec3 &view, const glm::dvec3 &vecDir, const glm::dvec3 &invDir) const {
 
 	double          a, b, c, d, k1, k2;
     Intersection    hit;

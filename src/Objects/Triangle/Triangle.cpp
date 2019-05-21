@@ -21,8 +21,44 @@ Triangle::Triangle(glm::dvec3 const &A, glm::dvec3 const &B, glm::dvec3 const &C
     _deterM = (_m11 * _m22) - (_m12 * _m12);
 }
 
+Triangle::Triangle(glm::dvec3 const &A, glm::dvec3 const &B, glm::dvec3 const &C, const Color &color) :
+	AHitable(color, glm::dvec3(0, 0, 0)),
+	_A(A, glm::dvec2(0.0, 0.0), glm::dvec3(0.0, 0.0, 0.0)),
+	_B(B, glm::dvec2(0.0, 0.0), glm::dvec3(0.0, 0.0, 0.0)),
+	_C(C, glm::dvec2(0.0, 0.0), glm::dvec3(0.0, 0.0, 0.0))
+{
+    _normal = glm::normalize(glm::cross(std::get<0>(_B) - std::get<0>(_A), std::get<0>(_C) - std::get<0>(_A)));
+    _u = std::get<0>(_B) - std::get<0>(_A);
+    _v = std::get<0>(_C) - std::get<0>(_A);
 
-Intersection		Triangle::hit(const glm::dvec3 &view, const glm::dvec3 &vecDir) const {
+    _m11 = glm::length2(_u);
+    _m12 = glm::dot(_u, _v);
+    _m22 = glm::length2(_v);
+
+    _deterM = (_m11 * _m22) - (_m12 * _m12);
+}
+
+Triangle::Triangle(glm::dvec3 const &A, glm::dvec3 const &B, glm::dvec3 const &C, const Color &color, double refractionIndex, double shining) :
+	AHitable(color, glm::dvec3(0, 0, 0)),
+	_A(A, glm::dvec2(0.0, 0.0), glm::dvec3(0.0, 0.0, 0.0)),
+	_B(B, glm::dvec2(0.0, 0.0), glm::dvec3(0.0, 0.0, 0.0)),
+	_C(C, glm::dvec2(0.0, 0.0), glm::dvec3(0.0, 0.0, 0.0))
+{
+    _refractionIndex = refractionIndex;
+    _shining = shining;
+    _normal = glm::normalize(glm::cross(std::get<0>(_B) - std::get<0>(_A), std::get<0>(_C) - std::get<0>(_A)));
+    _u = std::get<0>(_B) - std::get<0>(_A);
+    _v = std::get<0>(_C) - std::get<0>(_A);
+
+    _m11 = glm::length2(_u);
+    _m12 = glm::dot(_u, _v);
+    _m22 = glm::length2(_v);
+
+    _deterM = (_m11 * _m22) - (_m12 * _m12);
+}
+
+
+Intersection		Triangle::hit(const glm::dvec3 &view, const glm::dvec3 &vecDir, const glm::dvec3 &invDir) const {
 
 	Intersection	newInter;
 	double t = glm::dot(std::get<0>(_C) - view, _normal) / glm::dot(vecDir, _normal);

@@ -21,6 +21,7 @@
 #include <sstream>
 #include <fstream>
 #include <Objects/Triangle/Triangle.hpp>
+#include <Objects/Box/Box.hpp>
 #include "Utils.hpp"
 
 using namespace nlohmann;
@@ -66,6 +67,11 @@ public:
         return glm::dvec3(positionJson["x"], positionJson["y"], positionJson["z"]);
     }
 
+    static glm::dvec3   ParseSize(const json &j) {
+        const json &positionJson = j["size"];
+        return glm::dvec3(positionJson["x"], positionJson["y"], positionJson["z"]);
+    }
+
     static Color        ParseColor(const json &j) {
         const json &colorJson = j["color"];
         return Color {
@@ -75,11 +81,6 @@ public:
             colorJson["alpha"]
         };
     }
-    struct VertRef
-    {
-        VertRef( int v, int vt, int vn ) : v(v), vt(vt), vn(vn) { }
-        int v, vt, vn;
-    };
 
     static Sphere       *ParseSphere(const json &sphereJson) {
         Sphere          *sphere = ParseHitableObject<Sphere>(sphereJson);
@@ -107,6 +108,7 @@ public:
         return plane;
     }
 
+
     static Configuration        ParseConfiguration(const std::string &filename) {
         std::ifstream           configFile(filename);
         json                    jsonConfig;
@@ -128,13 +130,30 @@ public:
         return configuration;
     }
 
-    static std::vector<Triangle *>      ParseObj(const json &json) {
+    static Box                  *ParseBox(const json &j) {
+        glm::dvec3              position(ParsePosition(j));
+        glm::dvec3              size(ParseSize(j));
+        Color                   color = ParseColor(j);
+        double                  refractionIndex(j["refractionIndex"]);
+        double                  shining(j["shining"]);
+
+        return new Box(position, size, color, refractionIndex, shining);
+    }
+
+    struct VertRef
+    {
+        VertRef( int v, int vt, int vn ) : v(v), vt(vt), vn(vn) { }
+        int v, vt, vn;
+    };
+
+    static Polygon*      ParseObj(const json &json) {
 
         std::string     filename(json.at("path").get<std::string>());
         std::ifstream   file(getWorkingPath() + "/scenes/" + filename);
 
         std::vector<glm::dvec4> valuesVertices;
         std::vector<glm::dvec3> valuesTextures;
+        glm::dvec3              tMin(0, 0, 0), tMax(0, 0, 0);
 
         std::vector<glm::dvec3> valuesNormal;
         std::vector<Triangle *> triangles;
@@ -154,7 +173,11 @@ public:
                 {
                     double x = 0, y = 0, z = 0, w = 1;
                     lineSS >> x >> y >> z >> w;
-                    valuesVertices.emplace_back(glm::vec4( x, y, z, w ) );
+                    glm::dvec4 vertice(x, y, z, w);
+
+                    valuesVertices.emplace_back(vertice);
+                    tMin = glm::min(glm::dvec3(vertice), tMin);
+                    tMax = glm::max(glm::dvec3(vertice), tMax);
                 }
 
                 // texture
@@ -162,7 +185,7 @@ public:
                 {
                     double u = 0, v = 0, w = 0;
                     lineSS >> u >> v >> w;
-                    valuesTextures.emplace_back(glm::vec3( u, v, w ) );
+                    valuesTextures.emplace_back(glm::dvec3( u, v, w ) );
                 }
 
                 // normal
@@ -170,7 +193,7 @@ public:
                 {
                     double i = 0, k = 0, l = 0;
                     lineSS >> i >> k >> l;
-                    valuesNormal.emplace_back(glm::normalize( glm::vec3( i, k, l ) ) );
+                    valuesNormal.emplace_back(glm::normalize( glm::dvec3( i, k, l ) ) );
                 }
 
                 // polygon
@@ -336,7 +359,7 @@ public:
         }*/
 		else
 			std::cout << "Error obj file : " << (getWorkingPath() + "/scenes/" + filename) << std::endl;
-        return triangles;
+        return new Polygon(triangles, tMin, tMax);
     }
 
 private:

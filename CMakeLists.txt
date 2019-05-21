@@ -40,6 +40,7 @@ function(setupWindows)
 			src/Objects/Sphere/Sphere.cpp
 			src/Objects/Plane/Plane.cpp
 			src/Objects/Polygon/Polygon.cpp
+			src/Objects/Box/Box.cpp
 			)
 
 	target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARY})
@@ -68,7 +69,6 @@ function(setupLinux)
 			src/Objects/Camera/Camera.cpp
 			src/Objects/Triangle/Triangle.cpp
 			src/Objects/Triangle/Triangle.hpp
-			src/Ray/Ray.hpp
 			src/Ray/Ray.cpp
 			src/Objects/PointLight/PointLight.hpp
 			src/Objects/PointLight/PointLight.cpp
@@ -77,6 +77,7 @@ function(setupLinux)
 			src/Common/Utils.hpp
             src/Objects/Plane/Plane.cpp
 			src/Objects/Polygon/Polygon.cpp
+			src/Objects/Box/Box.cpp
 			)
 
 	string(STRIP ${SDL2_LIBRARIES} SDL2_LIBRARIES)

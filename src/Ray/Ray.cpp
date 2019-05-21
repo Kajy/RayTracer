@@ -12,9 +12,9 @@ Ray::Ray() {
 
 Ray::Ray(glm::dvec3 const &origin, glm::dvec3 const &dir):
     _origin(origin),
-    _dir(dir)
+    _dir(dir),
+    _invDir(1/dir.x, 1/dir.y, 1/dir.z)
 {
-
 }
 
 Ray::~Ray() {
@@ -34,7 +34,7 @@ Intersection      Ray::searchClosestHit(std::vector<AHitable *> const &shapeObje
     uint32_t        idxObj = 0;
 
     for (auto const &it: shapeObjects) {
-        Intersection newHit = it->hit(_origin, _dir);
+        Intersection newHit = it->hit(_origin, _dir, _invDir);
         if (newHit.distanceWithViewer < hit.distanceWithViewer) {
             hit = newHit;
         }

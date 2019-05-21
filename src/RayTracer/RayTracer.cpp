@@ -9,6 +9,7 @@
 #include <Objects/ALight.hpp>
 #include <Common/Utils.hpp>
 #include <Objects/Plane/Plane.hpp>
+#include <Objects/Box/Box.hpp>
 
 using namespace nlohmann;
 
@@ -105,21 +106,31 @@ void parseObjects(Scene &scene, const json &jsonFile) {
         switch (Utils::str2int(type.c_str())) {
             case Utils::str2int("sphere"): {
                 Sphere *sphere = Parser::ParseSphere(object);
-                objectsParsed.push_back(sphere);
+                objectsParsed.emplace_back(sphere);
                 Debug::printPosition(sphere, "sphere");
                 break;
             }
             case Utils::str2int("plane"): {
                 Plane *plane = Parser::ParsePlane(object);
-                objectsParsed.push_back(plane);
+                objectsParsed.emplace_back(plane);
                 Debug::printPosition(plane, "plane");
                 break;
             }
             case Utils::str2int("polygon"): {
-                std::vector<Triangle *> triangles = Parser::ParseObj(object);
-                objectsParsed.insert(std::end(objectsParsed), std::begin(triangles), std::end(triangles));
+                Polygon* polygon = Parser::ParseObj(object);
+#if DEBUG // display hitbox
+                objectsParsed.emplace_back(polygon->getHitBox());
+#else
+                objectsParsed.emplace_back(polygon);
+#endif
                 break;
             }
+            case Utils::str2int("box"): {
+                Box *box = Parser::ParseBox(object);
+                objectsParsed.emplace_back(box);
+                break;
+            }
+
         }
     }
     scene.setHitableObjects(objectsParsed);
