@@ -62,7 +62,7 @@ private:
     uint32_t        _windowHeight;
     int             _drawableSurfaceWidth;
     int             _drawableSurfaceHeight;
-	float			_ratioW, _ratioH;
+	int		    	_ratioW, _ratioH;
 
     Intersection    *_image;
 

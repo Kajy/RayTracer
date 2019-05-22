@@ -59,11 +59,13 @@ void        Window::drawPixel(Color finalColor, uint32_t x, uint32_t y) const
 
 static void savePNG(SDL_Texture *texture, uint32_t *pixels, uint32_t w, uint32_t h)
 {
+#ifndef __linux__
 	Uint32 format_pixels;
 	SDL_QueryTexture(texture, &format_pixels, NULL, NULL, NULL);
 	SDL_Surface *surface = SDL_CreateRGBSurfaceWithFormatFrom(pixels, w, h, 32, w * sizeof(Uint32), format_pixels);
 	IMG_SavePNG(surface, "scene.png");
 	SDL_FreeSurface(surface);
+#endif
 }
 
 void        Window::render() const
@@ -76,7 +78,7 @@ void        Window::render() const
     SDL_Texture *texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING,
                                 _drawableSurfaceWidth, _drawableSurfaceHeight);
     SDL_PixelFormat *format = SDL_AllocFormat(SDL_PIXELFORMAT_RGBA8888);
-    SDL_LockTexture(texture, NULL, &tmp, &pitch);
+    SDL_LockTexture(texture, nullptr, &tmp, &pitch);
     pixels = static_cast<Uint32 *>(tmp);
 
     for (uint32_t x = 0; x < _drawableSurfaceWidth; ++x) {
@@ -88,7 +90,7 @@ void        Window::render() const
 
     SDL_FreeFormat(format);
     SDL_UnlockTexture(texture);
-    SDL_RenderCopy(renderer, texture, NULL, NULL);
+    SDL_RenderCopy(renderer, texture, nullptr, nullptr);
     SDL_RenderPresent(renderer);
 
     savePNG(texture, pixels, _drawableSurfaceWidth, _drawableSurfaceHeight);
