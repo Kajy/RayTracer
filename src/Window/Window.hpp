@@ -38,7 +38,7 @@ public:
     Window(int w, int h);
     ~Window();
 
-    void    drawPixel(Color color, uint32_t x, uint32_t y) const;
+    void    drawPixel(Color const &color, uint32_t x, uint32_t y) const;
     void    render() const;
 
 private:

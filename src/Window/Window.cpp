@@ -43,7 +43,7 @@ Window::~Window() {
 }
 
 
-void        Window::drawPixel(Color finalColor, uint32_t x, uint32_t y) const
+void        Window::drawPixel(Color const &finalColor, uint32_t x, uint32_t y) const
 {
 	x *= this->_ratioH;
 	y *= this->_ratioW;
